@@ -1,10 +1,7 @@
-// ignore_for_file: prefer_const_constructors, no_logic_in_create_state, prefer_const_literals_to_create_immutables
-
 import 'package:commercial_app/data/db/cached_products.dart';
 import 'package:commercial_app/data/db/local_database.dart';
 import 'package:commercial_app/models/product.dart';
 import 'package:commercial_app/repository/myrepository.dart';
-import 'package:commercial_app/screens/tab_box/cart_screen/cart_screen.dart';
 import 'package:commercial_app/screens/tab_box/home_screen/widget/search.dart';
 import 'package:commercial_app/service/api_provider.dart';
 import 'package:flutter/material.dart';
@@ -82,27 +79,8 @@ class _HomeTabState extends State<HomeTab> {
             onTap: () => {},
             child: Icon(
               Icons.notifications,
+              size: 30,
               color: Colors.yellow,
-              shadows: [
-                BoxShadow(
-                  color: Colors.grey,
-                  offset: Offset(1, 1),
-                ),
-              ],
-            ),
-          ),
-          SizedBox(
-            width: 5,
-          ),
-          InkWell(
-            onTap: () => {
-              setState(
-                () => {},
-              )
-            },
-            child: Icon(
-              Icons.favorite,
-              color: Colors.red,
               shadows: [
                 BoxShadow(
                   color: Colors.grey,

@@ -2,7 +2,6 @@
 
 import 'package:commercial_app/screens/tab_box/cart_screen/cart_screen.dart';
 import 'package:commercial_app/screens/tab_box/home_screen/home_screen.dart';
-import 'package:commercial_app/screens/tab_box/user_screen/user_screen.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
@@ -13,7 +12,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  List<Widget> screens = [HomeTab(), CartPage(), UserPage()];
+  List<Widget> screens = [HomeTab(), CartPage()];
   int currentIndex = 0;
   @override
   Widget build(BuildContext context) {
@@ -36,10 +35,6 @@ class _HomePageState extends State<HomePage> {
             BottomNavigationBarItem(
               icon: Icon(Icons.shopping_basket_outlined),
               label: "Cart",
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.people_alt_outlined),
-              label: "Users",
             ),
           ]),
     );

@@ -1,5 +1,4 @@
 import 'package:commercial_app/models/product.dart';
-import 'package:commercial_app/models/user.dart';
 import 'package:commercial_app/service/api_provider.dart';
 
 class MyRepository {
