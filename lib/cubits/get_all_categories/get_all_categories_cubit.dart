@@ -7,7 +7,8 @@ part 'get_all_categories_state.dart';
 
 class GetAllCategoriesCubit extends Cubit<GetAllCategoriesState> {
   GetAllCategoriesCubit() : super(GetAllCategoriesInitial());
-
+  int selected = -1;
+  String selectedCategory = "";
   Future<List<String>> getAllCategories() async {
     emit(GetAllCategoriesLoading());
     try {

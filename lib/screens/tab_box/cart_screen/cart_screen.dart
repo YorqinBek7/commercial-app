@@ -68,7 +68,6 @@ class _CartPageState extends State<CartPage> {
                       await LocalDataBase.deleteByID(getAllProducts[index].id);
                       setState(() {});
                     },
-                  
                   ),
                 ),
               )
@@ -79,93 +78,3 @@ class _CartPageState extends State<CartPage> {
     );
   }
 }
-//  Container(
-//                       padding: EdgeInsets.all(15),
-//                       margin:
-//                           EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-//                       width: double.infinity,
-//                       color: Colors.white,
-//                       child: Row(
-//                         children: [
-//                           SizedBox(
-//                             width: 80,
-//                             height: 80,
-//                             child: Image.network(
-//                               CartPage.data[index].image,
-//                               fit: BoxFit.fill,
-//                             ),
-//                           ),
-//                           SizedBox(width: 10),
-//                           Column(
-//                             crossAxisAlignment: CrossAxisAlignment.start,
-//                             children: [
-//                               Row(
-//                                 mainAxisAlignment:
-//                                     MainAxisAlignment.spaceBetween,
-//                                 children: [
-//                                   Text(
-//                                     CartPage.data[index].title.length < 25
-//                                         ? CartPage.data[index].title
-//                                         : "${CartPage.data[index].title.substring(0, 25)}...",
-//                                   ),
-//                                   GestureDetector(
-//                                       onTap: () => {
-//                                             showDialog(
-//                                               context: context,
-//                                               builder: (BuildContext context) =>
-//                                                   AlertDialog(
-//                                                 title:
-//                                                     Text("Remove From Cart?"),
-//                                                 content: ,
-//                                               ),
-//                                             )
-//                                           },
-//                                       child: Icon(Icons.restore_from_trash))
-//                                 ],
-//                               ),
-//                               SizedBox(height: 10),
-//                               Row(
-//                                 children: [
-//                                   Text(
-//                                       "Rate: ${CartPage.data[index].ratingItem.rate}"),
-//                                   Icon(Icons.star, color: Colors.yellow)
-//                                 ],
-//                               ),
-//                               SizedBox(height: 10),
-//                               Row(
-//                                 children: [
-//                                   Text(CartPage.data[index].price.toString()),
-//                                   Container(
-//                                     padding: EdgeInsets.symmetric(
-//                                         horizontal: 10, vertical: 5),
-//                                     decoration: BoxDecoration(
-//                                         color: Colors.grey.shade300,
-//                                         borderRadius:
-//                                             BorderRadius.circular(10)),
-//                                     child: Row(children: [
-//                                       Text(
-//                                         "-",
-//                                         style: TextStyle(fontSize: 18),
-//                                       ),
-//                                       SizedBox(width: 10),
-//                                       Text(
-//                                         "0",
-//                                         style: TextStyle(fontSize: 18),
-//                                       ),
-//                                       SizedBox(width: 10),
-//                                       Text(
-//                                         "+",
-//                                         style: TextStyle(fontSize: 18),
-//                                       )
-//                                     ]),
-//                                   )
-//                                 ],
-//                               )
-//                             ],
-//                           ),
-//                         ],
-//                       )),
-//                 ),
-//               )
-//             ],
-//           )), 
