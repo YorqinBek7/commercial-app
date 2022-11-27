@@ -1,5 +1,4 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
-
 import 'package:commercial_app/cubits/get_all_categories/get_all_categories_cubit.dart';
 import 'package:commercial_app/cubits/products/products_cubit.dart';
 import 'package:commercial_app/data/db/cached_products.dart';
@@ -25,10 +24,13 @@ class HomeTab extends StatefulWidget {
 class _HomeTabState extends State<HomeTab> {
   bool visibility = true;
   int id = 0;
+  bool isSearching = false;
+  Set<ProductItem> searchedProducts = {};
 
   @override
   void initState() {
     _init();
+
     super.initState();
   }
 
@@ -36,17 +38,31 @@ class _HomeTabState extends State<HomeTab> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey.shade100,
+      resizeToAvoidBottomInset: false,
       appBar: CustomAppBar(),
-      body: Container(
-        margin: EdgeInsets.only(left: 10, right: 5),
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
         child: Column(
+          mainAxisSize: MainAxisSize.min,
           children: [
             Visibility(
               visible: visibility,
               child: SearchField(
-                  hintText: "Search",
-                  prefixIcon: Icons.search,
-                  suffixIcon: Icons.settings),
+                onChanged: (value) {
+                  (value as String).isEmpty
+                      ? isSearching = false
+                      : isSearching = true;
+                  searchedProducts.clear();
+                  for (var element
+                      in context.read<ProductsCubit>().allProducts) {
+                    if (element.title.toLowerCase().trim().contains(value)) {
+                      searchedProducts.add(element);
+                    }
+                  }
+
+                  setState(() {});
+                },
+              ),
             ),
             SizedBox(
               height: 20,
@@ -84,14 +100,15 @@ class _HomeTabState extends State<HomeTab> {
             SizedBox(
               height: 20,
             ),
-// <<------------------------------------------------- Get Categories Rows --------------------------------------------->>
+            // <<------------------------------------------------- Get Categories Rows --------------------------------------------->>
             Visibility(
               visible: visibility,
               child: BlocBuilder<GetAllCategoriesCubit, GetAllCategoriesState>(
                 builder: (context, state) {
                   if (state is GetAllCategoriesSucces) {
                     List<String> data = state.allCategories;
-                    return Expanded(
+                    return SizedBox(
+                      height: 100,
                       child: ListView(
                         scrollDirection: Axis.horizontal,
                         children: List.generate(
@@ -135,22 +152,23 @@ class _HomeTabState extends State<HomeTab> {
                 },
               ),
             ),
-
             // <<--------------------------------------------------- Get Products ----------------------------------------->>
             BlocBuilder<ProductsCubit, ProductsState>(
               builder: (context, state) {
                 if (state is ProductsSuccess) {
-                  List<ProductItem> data = state.products;
+                  List<ProductItem> data =
+                      isSearching ? searchedProducts.toList() : state.products;
                   return Expanded(
                     flex: 4,
                     child: GridView.builder(
                       padding: EdgeInsets.all(5),
                       itemCount: data.length,
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2,
-                          mainAxisSpacing: 10,
-                          crossAxisSpacing: 10,
-                          childAspectRatio: .82),
+                        crossAxisCount: 2,
+                        mainAxisSpacing: 10,
+                        crossAxisSpacing: 10,
+                        childAspectRatio: .82,
+                      ),
                       itemBuilder: (context, index) => ProductsItemWidget(
                         onTap: () async {
                           var item = SelectedProducts(
@@ -190,7 +208,8 @@ class _HomeTabState extends State<HomeTab> {
   }
 
   Future<void> _init() async {
-    context.read<ProductsCubit>().getProductsList();
+    context.read<ProductsCubit>().allProducts =
+        await context.read<ProductsCubit>().getProductsList();
     context.read<GetAllCategoriesCubit>().getAllCategories();
   }
 

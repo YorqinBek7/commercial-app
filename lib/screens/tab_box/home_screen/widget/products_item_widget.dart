@@ -6,12 +6,13 @@ class ProductsItemWidget extends StatelessWidget {
   List<ProductItem> data;
   int index;
   int isSelected;
-  ProductsItemWidget(
-      {super.key,
-      required this.onTap,
-      required this.data,
-      required this.index,
-      required this.isSelected});
+  ProductsItemWidget({
+    super.key,
+    required this.onTap,
+    required this.data,
+    required this.index,
+    required this.isSelected,
+  });
 
   @override
   Widget build(BuildContext context) {

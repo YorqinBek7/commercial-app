@@ -9,6 +9,7 @@ part 'products_state.dart';
 class ProductsCubit extends Cubit<ProductsState> {
   ProductsCubit() : super(ProductsInitial());
   int isSelected = -1;
+  List<ProductItem> allProducts = [];
   Future<List<ProductItem>> getProductsList() async {
     emit(ProductsLoading());
     try {

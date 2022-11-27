@@ -200,8 +200,9 @@ class _CustomCartsState extends State<CustomCarts> {
                       padding:
                           EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                       decoration: BoxDecoration(
-                          color: Colors.grey.shade300,
-                          borderRadius: BorderRadius.circular(10)),
+                        color: Colors.grey.shade300,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
                       child: Row(children: [
                         GestureDetector(
                           child: const Text(
