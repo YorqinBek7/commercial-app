@@ -208,9 +208,10 @@ class _HomeTabState extends State<HomeTab> {
   }
 
   Future<void> _init() async {
+    context.read<ProductsCubit>().getProductsList();
+    context.read<GetAllCategoriesCubit>().getAllCategories();
     context.read<ProductsCubit>().allProducts =
         await context.read<ProductsCubit>().getProductsList();
-    context.read<GetAllCategoriesCubit>().getAllCategories();
   }
 
   void updateUi({required String categoryName}) async {

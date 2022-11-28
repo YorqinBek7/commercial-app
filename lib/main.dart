@@ -2,11 +2,13 @@
 
 import 'package:commercial_app/cubits/get_all_categories/get_all_categories_cubit.dart';
 import 'package:commercial_app/cubits/products/products_cubit.dart';
-import 'package:commercial_app/screens/home.dart';
+import 'package:commercial_app/screens/splash_screen/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  // await Firebase.initializeApp();
   runApp(const MyApp());
 }
 
@@ -26,7 +28,7 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: HomePage(),
+        home: SplashScreen(),
       ),
     );
   }
