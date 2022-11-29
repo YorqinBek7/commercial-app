@@ -1,5 +1,6 @@
 import 'dart:convert';
-
+import 'package:commercial_app/data/db/cached_products.dart';
+import 'package:commercial_app/data/db/local_database.dart';
 import 'package:commercial_app/models/product.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -10,6 +11,7 @@ class ProductsCubit extends Cubit<ProductsState> {
   ProductsCubit() : super(ProductsInitial());
   int isSelected = -1;
   List<ProductItem> allProducts = [];
+  List<SelectedProducts> storageProducts = [];
   Future<List<ProductItem>> getProductsList() async {
     emit(ProductsLoading());
     try {
@@ -54,5 +56,9 @@ class ProductsCubit extends Cubit<ProductsState> {
       emit(ProductsError(error: e.toString()));
       throw Exception(e);
     }
+  }
+
+  Future getProductsFromStorage() async {
+    storageProducts = await LocalDataBase.getAllProducts();
   }
 }

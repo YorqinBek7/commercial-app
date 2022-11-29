@@ -7,6 +7,7 @@ class SelectedProductsRows {
   static const String price = "price";
   static const String count = "count";
   static const String id = "_id";
+  static const String countSelect = "count_select";
 }
 
 class SelectedProducts {
@@ -16,6 +17,7 @@ class SelectedProducts {
   final int rate;
   final int price;
   final int count;
+  final int countSelect;
 
   SelectedProducts({
     required this.count,
@@ -24,6 +26,7 @@ class SelectedProducts {
     required this.rate,
     required this.title,
     required this.id,
+    required this.countSelect,
   });
   SelectedProducts copyWith({
     String? image,
@@ -32,6 +35,7 @@ class SelectedProducts {
     int? price,
     int? count,
     int? id,
+    int? countSelect,
   }) =>
       SelectedProducts(
         count: count ?? this.count,
@@ -40,6 +44,7 @@ class SelectedProducts {
         rate: rate ?? this.rate,
         title: title ?? this.title,
         id: id ?? this.id,
+        countSelect: countSelect ?? this.countSelect,
       );
   static SelectedProducts fromJson(Map<String, Object?> json) {
     return SelectedProducts(
@@ -49,6 +54,7 @@ class SelectedProducts {
       rate: json[SelectedProductsRows.rate] as int,
       title: json[SelectedProductsRows.title] as String,
       id: json[SelectedProductsRows.id] as int,
+      countSelect: json[SelectedProductsRows.countSelect] as int,
     );
   }
 
@@ -59,11 +65,12 @@ class SelectedProducts {
       SelectedProductsRows.price: price,
       SelectedProductsRows.rate: rate,
       SelectedProductsRows.title: title,
+      SelectedProductsRows.countSelect: countSelect,
     };
   }
 
   @override
   String toString() {
-    return "count:$count title: $title rate: $rate image:$image price:$price id:$id";
+    return "count:$count title: $title rate: $rate image:$image price:$price id:$id countSelect: $countSelect";
   }
 }

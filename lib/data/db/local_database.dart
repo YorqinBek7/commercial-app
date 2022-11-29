@@ -1,7 +1,5 @@
 import 'package:commercial_app/data/db/cached_products.dart';
-import 'package:commercial_app/models/product.dart';
 import 'package:sqflite/sqflite.dart';
-import 'package:sqflite/sqlite_api.dart';
 import 'package:path/path.dart';
 
 class LocalDataBase {
@@ -35,7 +33,8 @@ class LocalDataBase {
       ${SelectedProductsRows.price} $intType,
       ${SelectedProductsRows.rate} $intType,
       ${SelectedProductsRows.title} $textType,
-      ${SelectedProductsRows.id} $idType
+      ${SelectedProductsRows.id} $idType,
+      ${SelectedProductsRows.countSelect} $intType
     )
 ''');
   }
@@ -69,10 +68,23 @@ class LocalDataBase {
     return result.map((json) => SelectedProducts.fromJson(json)).toList();
   }
 
-  static Future<int> editProducts({required isDone, required id}) async {
+  static Future<int> editProducts({required int id}) async {
     Map<String, Object?> row = {
       SelectedProductsRows.id: id,
     };
+
+    final db = await getInstance.database;
+    return await db.update(
+      tableName,
+      row,
+      where: '${SelectedProductsRows.id} = ?',
+      whereArgs: [id],
+    );
+  }
+
+  static Future<int> editProductCount(
+      {required int count, required int id}) async {
+    Map<String, Object?> row = {SelectedProductsRows.countSelect: count};
 
     final db = await getInstance.database;
     return await db.update(

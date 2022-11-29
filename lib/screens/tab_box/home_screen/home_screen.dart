@@ -42,10 +42,11 @@ class _HomeTabState extends State<HomeTab> {
       appBar: CustomAppBar(
         onTap: () {
           Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => UserScreen(),
-              ));
+            context,
+            MaterialPageRoute(
+              builder: (context) => UserScreen(),
+            ),
+          );
         },
       ),
       body: Padding(
@@ -185,6 +186,7 @@ class _HomeTabState extends State<HomeTab> {
                             rate: data[index].ratingItem.rate.toInt(),
                             title: data[index].title,
                             id: id++,
+                            countSelect: 0,
                           );
                           await LocalDataBase.insert(item);
                           setState(

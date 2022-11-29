@@ -19,24 +19,25 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       body: screens[currentIndex],
       bottomNavigationBar: BottomNavigationBar(
-          onTap: (value) => {
-                setState(
-                  () => {
-                    currentIndex = value,
-                  },
-                )
-              },
-          currentIndex: currentIndex,
-          items: [
-            BottomNavigationBarItem(
-              icon: Icon(Icons.home_outlined),
-              label: "Home",
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.shopping_basket_outlined),
-              label: "Cart",
-            ),
-          ]),
+        onTap: (value) => {
+          setState(
+            () => {
+              currentIndex = value,
+            },
+          )
+        },
+        currentIndex: currentIndex,
+        items: [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home_outlined),
+            label: "Home",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.shopping_basket_outlined),
+            label: "Cart",
+          ),
+        ],
+      ),
     );
   }
 }
