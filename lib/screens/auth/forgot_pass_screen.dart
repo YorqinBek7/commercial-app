@@ -1,9 +1,12 @@
 import 'package:commercial_app/screens/auth/widgets/auth_button.dart';
 import 'package:commercial_app/screens/auth/widgets/field_for_text.dart';
+import 'package:email_validator/email_validator.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class ForgotPasswordScreen extends StatelessWidget {
-  const ForgotPasswordScreen({super.key});
+  final TextEditingController emailController = TextEditingController();
+  ForgotPasswordScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -44,11 +47,51 @@ class ForgotPasswordScreen extends StatelessWidget {
               SizedBox(
                 height: 24,
               ),
-              FieldForText(hintText: "Enter your email"),
+              Text(
+                "If you can't find the message in your email, please check your spam",
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w500,
+                  color: Colors.pink,
+                ),
+              ),
+              SizedBox(
+                height: 24,
+              ),
+              FieldForText(
+                hintText: "Enter your email",
+                controller: emailController,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return "Please enter something!";
+                  } else if (!EmailValidator.validate(value)) {
+                    return "Please enter correct email!";
+                  }
+                  return null;
+                },
+              ),
               SizedBox(
                 height: 32,
               ),
-              AuthButton(onTap: () {}, text: "Continue")
+              AuthButton(
+                  onTap: () async {
+                    try {
+                      await FirebaseAuth.instance.sendPasswordResetEmail(
+                          email: emailController.text.trim());
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text("Reset password sent to your email"),
+                        ),
+                      );
+                    } on FirebaseAuthException catch (e) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text(e.message.toString()),
+                        ),
+                      );
+                    }
+                  },
+                  text: "Continue")
             ],
           ),
         ),

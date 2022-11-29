@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSize {
-  const CustomAppBar({super.key});
+  final VoidCallback onTap;
+  const CustomAppBar({super.key, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +18,8 @@ class CustomAppBar extends StatelessWidget implements PreferredSize {
       backgroundColor: Colors.grey.shade100,
       leading: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: Image.asset("assets/images/avatar.png"),
+        child: GestureDetector(
+            onTap: onTap, child: Image.asset("assets/images/avatar.png")),
       ),
       title: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         Text(

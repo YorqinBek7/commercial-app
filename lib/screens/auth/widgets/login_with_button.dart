@@ -4,16 +4,19 @@ import 'package:flutter_svg/flutter_svg.dart';
 class LoginWithButton extends StatelessWidget {
   final String imagePath;
   final String title;
+  final VoidCallback onTap;
 
   const LoginWithButton({
     Key? key,
     required this.imagePath,
     required this.title,
+    required this.onTap,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
+      onTap: onTap,
       child: Container(
         width: double.infinity,
         margin: EdgeInsets.symmetric(horizontal: 10),

@@ -1,12 +1,16 @@
 // ignore_for_file: prefer_const_constructors
+import 'dart:developer';
+
 import 'package:commercial_app/screens/auth/forgot_pass_screen.dart';
 import 'package:commercial_app/screens/auth/register.dart';
 import 'package:commercial_app/screens/auth/widgets/auth_button.dart';
+import 'package:commercial_app/screens/auth/widgets/changer_login_and_register.dart';
 import 'package:commercial_app/screens/auth/widgets/field_for_text.dart';
 import 'package:commercial_app/screens/auth/widgets/line_widget.dart';
 import 'package:commercial_app/screens/auth/widgets/login_with_button.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+
+import 'extansions/sign_in_user.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -17,6 +21,8 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   bool isHidePassword = false;
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,7 +46,9 @@ class _LoginScreenState extends State<LoginScreen> {
                   style: TextStyle(fontSize: 60),
                 ),
               ),
-              SizedBox(height: 40),
+              SizedBox(
+                height: 40,
+              ),
               Text(
                 "Sign In",
                 style: TextStyle(
@@ -49,25 +57,23 @@ class _LoginScreenState extends State<LoginScreen> {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              SizedBox(height: 24),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: const [
-                  Expanded(
-                    child: LoginWithButton(
-                      imagePath: "assets/svg/facebook.svg",
-                      title: 'Facebook',
-                    ),
-                  ),
-                  Expanded(
-                    child: LoginWithButton(
-                      imagePath: "assets/svg/google.svg",
-                      title: 'Google',
-                    ),
-                  ),
-                ],
+              SizedBox(
+                height: 24,
               ),
-              SizedBox(height: 30),
+              LoginWithButton(
+                imagePath: "assets/svg/google.svg",
+                title: 'Google',
+                onTap: () async {
+                  try {
+                    await signWithGoogle();
+                  } catch (e) {
+                    log(e.toString());
+                  }
+                },
+              ),
+              SizedBox(
+                height: 30,
+              ),
               Row(
                 children: const [
                   LineWidget(),
@@ -75,33 +81,41 @@ class _LoginScreenState extends State<LoginScreen> {
                   LineWidget(),
                 ],
               ),
-              SizedBox(height: 30),
-              FieldForText(
-                hintText: "Name",
+              SizedBox(
+                height: 30,
               ),
-              SizedBox(height: 16),
+              FieldForText(
+                hintText: "Email",
+                controller: emailController,
+              ),
+              SizedBox(
+                height: 16,
+              ),
               FieldForText(
                 hintText: "Password",
+                isObscure: isHidePassword,
                 onTap: () {
-                  setState(
-                    () => {
-                      isHidePassword = !isHidePassword,
-                    },
-                  );
+                  setState(() => {
+                        isHidePassword = !isHidePassword,
+                      });
                 },
                 icon: isHidePassword ? Icons.visibility : Icons.visibility_off,
+                controller: passwordController,
               ),
-              SizedBox(height: 8),
+              SizedBox(
+                height: 8,
+              ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   TextButton(
                     onPressed: () {
                       Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => ForgotPasswordScreen(),
-                          ));
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => ForgotPasswordScreen(),
+                        ),
+                      );
                     },
                     child: Text(
                       "Forgot Password?",
@@ -110,28 +124,24 @@ class _LoginScreenState extends State<LoginScreen> {
                   )
                 ],
               ),
-              SizedBox(height: 32),
+              SizedBox(
+                height: 32,
+              ),
               AuthButton(
-                onTap: () {},
+                onTap: () async {
+                  await signUser(
+                    email: emailController.text,
+                    password: passwordController.text,
+                    context: context,
+                  );
+                },
                 text: 'Log in',
               ),
-              SizedBox(height: 16),
-              TextButton(
-                child: RichText(
-                  text: TextSpan(
-                    children: const [
-                      TextSpan(
-                        text: "Don't have account?",
-                        style: TextStyle(color: Colors.black),
-                      ),
-                      TextSpan(
-                        text: " Sign Up",
-                        style: TextStyle(color: Colors.blue),
-                      ),
-                    ],
-                  ),
-                ),
-                onPressed: () {
+              SizedBox(
+                height: 16,
+              ),
+              ChangerLoginAndRegister(
+                onTap: () {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
@@ -139,7 +149,9 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   );
                 },
-              ),
+                txt1: "Don't have account?",
+                txt2: " Sign Up",
+              )
             ],
           ),
         ),

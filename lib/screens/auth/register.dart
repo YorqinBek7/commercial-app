@@ -1,12 +1,15 @@
 // ignore_for_file: prefer_const_constructors
-
+import 'package:commercial_app/screens/auth/extansions/sign_in_user.dart';
 import 'package:commercial_app/screens/auth/login_screen.dart';
 import 'package:commercial_app/screens/auth/widgets/auth_button.dart';
+import 'package:commercial_app/screens/auth/widgets/changer_login_and_register.dart';
 import 'package:commercial_app/screens/auth/widgets/field_for_text.dart';
 import 'package:commercial_app/screens/auth/widgets/line_widget.dart';
 import 'package:commercial_app/screens/auth/widgets/login_with_button.dart';
-import 'package:commercial_app/screens/home.dart';
+import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
+
+import 'extansions/register_user.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -17,6 +20,9 @@ class RegisterScreen extends StatefulWidget {
 
 class _RegisterScreenState extends State<RegisterScreen> {
   bool isHidePassword = false;
+  final TextEditingController nameController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -49,22 +55,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     fontWeight: FontWeight.bold),
               ),
               SizedBox(height: 24),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: const [
-                  Expanded(
-                    child: LoginWithButton(
-                      imagePath: "assets/svg/facebook.svg",
-                      title: 'Facebook',
-                    ),
-                  ),
-                  Expanded(
-                    child: LoginWithButton(
-                      imagePath: "assets/svg/google.svg",
-                      title: 'Google',
-                    ),
-                  ),
-                ],
+              LoginWithButton(
+                imagePath: "assets/svg/google.svg",
+                title: 'Google',
+                onTap: () async {
+                  await signWithGoogle();
+                },
               ),
               SizedBox(height: 30),
               Row(
@@ -77,14 +73,33 @@ class _RegisterScreenState extends State<RegisterScreen> {
               SizedBox(height: 30),
               FieldForText(
                 hintText: "Name",
+                controller: nameController,
+                validator: (String? value) {
+                  if (value == null || value.isEmpty) {
+                    return "Please enter something!";
+                  } else if (value.length < 3) {
+                    return "Name length should be longer than 3";
+                  }
+                  return null;
+                },
               ),
               SizedBox(height: 16),
               FieldForText(
                 hintText: "Email/Phone Number",
+                controller: emailController,
+                validator: (String? value) {
+                  if (value == null || value.isEmpty) {
+                    return "Please enter something!";
+                  } else if (!EmailValidator.validate(value)) {
+                    return "Please enter correct email!";
+                  }
+                  return null;
+                },
               ),
               SizedBox(height: 16),
               FieldForText(
                 hintText: "Password",
+                isObscure: isHidePassword,
                 onTap: () {
                   setState(
                     () => {
@@ -93,36 +108,29 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   );
                 },
                 icon: isHidePassword ? Icons.visibility : Icons.visibility_off,
+                controller: passwordController,
+                validator: (String? value) {
+                  if (value == null || value.isEmpty) {
+                    return "Please enter something!";
+                  }
+                  return null;
+                },
               ),
               SizedBox(height: 16),
               AuthButton(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => HomePage(),
-                    ),
+                onTap: () async {
+                  await registerUser(
+                    email: emailController.text,
+                    name: nameController.text,
+                    password: passwordController.text,
+                    context: context,
                   );
                 },
                 text: "Create Account",
               ),
               SizedBox(height: 16),
-              TextButton(
-                child: RichText(
-                  text: TextSpan(
-                    children: const [
-                      TextSpan(
-                        text: "Do you have account?",
-                        style: TextStyle(color: Colors.black),
-                      ),
-                      TextSpan(
-                        text: " Sign In",
-                        style: TextStyle(color: Colors.blue),
-                      ),
-                    ],
-                  ),
-                ),
-                onPressed: () {
+              ChangerLoginAndRegister(
+                onTap: () {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
@@ -130,6 +138,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     ),
                   );
                 },
+                txt1: 'Do you have account?',
+                txt2: ' Sign in',
               ),
             ],
           ),

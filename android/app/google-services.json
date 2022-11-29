@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "368784392392",
+    "project_id": "commercial-app-74f54",
+    "storage_bucket": "commercial-app-74f54.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:368784392392:android:b3eea86faf93c76bdda5fd",
+        "android_client_info": {
+          "package_name": "uz.super_shop"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "368784392392-q43h6ijljt187trkl5v2fmobl0sci15o.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAVbu-Flf5z-G5Yw54vbIZFkFbLkr8Mjcw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "368784392392-q43h6ijljt187trkl5v2fmobl0sci15o.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

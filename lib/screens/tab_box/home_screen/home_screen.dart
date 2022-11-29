@@ -5,12 +5,13 @@ import 'package:commercial_app/data/db/cached_products.dart';
 import 'package:commercial_app/data/db/local_database.dart';
 import 'package:commercial_app/models/product.dart';
 import 'package:commercial_app/repository/myrepository.dart';
-import 'package:commercial_app/screens/tab_box/home_screen/category_item_widget.dart';
+import 'package:commercial_app/screens/tab_box/home_screen/widget/category_item_widget.dart';
 import 'package:commercial_app/screens/tab_box/home_screen/widget/category_shimmer.dart';
 import 'package:commercial_app/screens/tab_box/home_screen/widget/custom_app_bar.dart';
 import 'package:commercial_app/screens/tab_box/home_screen/widget/products_item_widget.dart';
 import 'package:commercial_app/screens/tab_box/home_screen/widget/products_shimmer.dart';
 import 'package:commercial_app/screens/tab_box/home_screen/widget/search.dart';
+import 'package:commercial_app/screens/user_screen/user_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -30,7 +31,6 @@ class _HomeTabState extends State<HomeTab> {
   @override
   void initState() {
     _init();
-
     super.initState();
   }
 
@@ -39,7 +39,15 @@ class _HomeTabState extends State<HomeTab> {
     return Scaffold(
       backgroundColor: Colors.grey.shade100,
       resizeToAvoidBottomInset: false,
-      appBar: CustomAppBar(),
+      appBar: CustomAppBar(
+        onTap: () {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => UserScreen(),
+              ));
+        },
+      ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
@@ -59,7 +67,6 @@ class _HomeTabState extends State<HomeTab> {
                       searchedProducts.add(element);
                     }
                   }
-
                   setState(() {});
                 },
               ),

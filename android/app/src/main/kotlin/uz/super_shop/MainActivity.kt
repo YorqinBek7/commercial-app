@@ -1,4 +1,4 @@
-package com.example.commercial_app
+package uz.super_shop
 
 import io.flutter.embedding.android.FlutterActivity
 

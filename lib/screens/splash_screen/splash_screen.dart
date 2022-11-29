@@ -1,4 +1,8 @@
+import 'dart:developer';
+
 import 'package:commercial_app/screens/auth/login_screen.dart';
+import 'package:commercial_app/screens/home.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -16,21 +20,22 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   init() async {
-    await Future.delayed(const Duration(seconds: 2), () {
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => LoginScreen(),
-        ),
-      );
-    });
+    await Future.delayed(const Duration(seconds: 2));
   }
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
       body: Center(
-        child: Text("Splash"),
+        child: StreamBuilder(
+          stream: FirebaseAuth.instance.authStateChanges(),
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              return HomePage();
+            }
+            return LoginScreen();
+          },
+        ),
       ),
     );
   }
