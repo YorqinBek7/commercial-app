@@ -1,4 +1,6 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
+import 'dart:developer';
+
 import 'package:commercial_app/cubits/get_all_categories/get_all_categories_cubit.dart';
 import 'package:commercial_app/cubits/products/products_cubit.dart';
 import 'package:commercial_app/data/db/cached_products.dart';
@@ -26,6 +28,7 @@ class _HomeTabState extends State<HomeTab> {
   bool visibility = true;
   int id = 0;
   bool isSearching = false;
+  List<Models> elements = [];
   Set<ProductItem> searchedProducts = {};
 
   @override
@@ -189,15 +192,19 @@ class _HomeTabState extends State<HomeTab> {
                             countSelect: 0,
                           );
                           await LocalDataBase.insert(item);
+                          var s = await LocalDataBase.getAllProducts();
+                          elements.add(Models(
+                            id: s.last.id,
+                            index: index,
+                          ));
+                          log(s.last.id.toString());
                           setState(
-                            () => {
-                              context.read<ProductsCubit>().isSelected = index,
-                            },
+                            () => {},
                           );
                         },
                         data: data,
                         index: index,
-                        isSelected: context.read<ProductsCubit>().isSelected,
+                        selectedElements: elements,
                       ),
                     ),
                   );
@@ -228,4 +235,13 @@ class _HomeTabState extends State<HomeTab> {
         .read<ProductsCubit>()
         .getSelectCategory(categoryName: categoryName);
   }
+}
+
+class Models {
+  int index;
+  int id;
+  Models({
+    required this.id,
+    required this.index,
+  });
 }

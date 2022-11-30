@@ -1,4 +1,6 @@
 // ignore_for_file: prefer_const_constructors
+import 'dart:developer';
+
 import 'package:commercial_app/cubits/products/products_cubit.dart';
 import 'package:commercial_app/data/db/local_database.dart';
 import 'package:commercial_app/screens/tab_box/cart_screen/widget/delete_bottom_sheet.dart';
@@ -70,6 +72,7 @@ class _CustomCartsItemState extends State<CustomCartsItem> {
                       },
                       child: Icon(
                         Icons.delete,
+                        color: Colors.pinkAccent,
                       ),
                     )
                   ],
@@ -98,17 +101,23 @@ class _CustomCartsItemState extends State<CustomCartsItem> {
                       child: Row(children: [
                         TextButton(
                           onPressed: () async {
-                            int c = context
-                                .read<ProductsCubit>()
-                                .storageProducts[widget.index]
-                                .countSelect;
-                            await LocalDataBase.editProductCount(
-                              count: c - 1,
-                              id: widget.id,
-                            );
-                            await context
-                                .read<ProductsCubit>()
-                                .getProductsFromStorage();
+                            if (context
+                                    .read<ProductsCubit>()
+                                    .storageProducts[widget.index]
+                                    .countSelect >
+                                0) {
+                              int c = context
+                                  .read<ProductsCubit>()
+                                  .storageProducts[widget.index]
+                                  .countSelect;
+                              await LocalDataBase.editProductCount(
+                                count: c - 1,
+                                id: widget.id,
+                              );
+                              await context
+                                  .read<ProductsCubit>()
+                                  .getProductsFromStorage();
+                            }
                             setState(() {});
                           },
                           child: const Text(
@@ -128,17 +137,32 @@ class _CustomCartsItemState extends State<CustomCartsItem> {
                         SizedBox(width: 10),
                         TextButton(
                           onPressed: () async {
-                            int c = context
-                                .read<ProductsCubit>()
-                                .storageProducts[widget.index]
-                                .countSelect;
-                            await LocalDataBase.editProductCount(
-                              count: c + 1,
-                              id: widget.id,
-                            );
-                            await context
-                                .read<ProductsCubit>()
-                                .getProductsFromStorage();
+                            if (context
+                                    .read<ProductsCubit>()
+                                    .storageProducts[widget.index]
+                                    .countSelect <
+                                context
+                                    .read<ProductsCubit>()
+                                    .storageProducts[widget.index]
+                                    .count) {
+                              int c = context
+                                  .read<ProductsCubit>()
+                                  .storageProducts[widget.index]
+                                  .countSelect;
+                              await LocalDataBase.editProductCount(
+                                count: c + 1,
+                                id: widget.id,
+                              );
+                              await context
+                                  .read<ProductsCubit>()
+                                  .getProductsFromStorage();
+                            } else {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text("Mahsulot qolmadi!"),
+                                ),
+                              );
+                            }
                             setState(() {});
                           },
                           child: Text(

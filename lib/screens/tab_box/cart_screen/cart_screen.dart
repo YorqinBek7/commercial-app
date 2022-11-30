@@ -26,7 +26,6 @@ class _CartPageState extends State<CartPage> {
   init() async {
     await context.read<ProductsCubit>().getProductsFromStorage();
     setState(() {});
-    log("message");
   }
 
   @override

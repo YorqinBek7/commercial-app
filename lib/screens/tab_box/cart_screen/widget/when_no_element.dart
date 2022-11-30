@@ -17,13 +17,6 @@ class WhenNoElement extends StatelessWidget {
             width: 350,
             height: 350,
           ),
-          Text(
-            "Cart is empty😢",
-            style: TextStyle(
-              fontSize: 22,
-              fontWeight: FontWeight.w500,
-            ),
-          )
         ],
       ),
     );
