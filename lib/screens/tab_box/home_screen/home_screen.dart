@@ -1,6 +1,6 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
+import 'dart:convert';
 import 'dart:developer';
-
 import 'package:commercial_app/cubits/get_all_categories/get_all_categories_cubit.dart';
 import 'package:commercial_app/cubits/products/products_cubit.dart';
 import 'package:commercial_app/data/db/cached_products.dart';
@@ -16,6 +16,7 @@ import 'package:commercial_app/screens/tab_box/home_screen/widget/search.dart';
 import 'package:commercial_app/screens/user_screen/user_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeTab extends StatefulWidget {
   const HomeTab({super.key});
@@ -30,7 +31,7 @@ class _HomeTabState extends State<HomeTab> {
   bool isSearching = false;
   List<Models> elements = [];
   Set<ProductItem> searchedProducts = {};
-
+  late SharedPreferences sharedPreferences;
   @override
   void initState() {
     _init();
@@ -193,11 +194,14 @@ class _HomeTabState extends State<HomeTab> {
                           );
                           await LocalDataBase.insert(item);
                           var s = await LocalDataBase.getAllProducts();
-                          elements.add(Models(
-                            id: s.last.id,
-                            index: index,
-                          ));
-                          log(s.last.id.toString());
+                          elements.add(
+                            Models(
+                              id: s.last.id,
+                              index: index,
+                            ),
+                          );
+                          final String encodedData = Models.encode(elements);
+                          sharedPreferences.setString("models", encodedData);
                           setState(
                             () => {},
                           );
@@ -228,6 +232,9 @@ class _HomeTabState extends State<HomeTab> {
     context.read<GetAllCategoriesCubit>().getAllCategories();
     context.read<ProductsCubit>().allProducts =
         await context.read<ProductsCubit>().getProductsList();
+    sharedPreferences = await SharedPreferences.getInstance();
+    final String? decodedData = sharedPreferences.getString("models");
+    elements = Models.decode(decodedData!);
   }
 
   void updateUi({required String categoryName}) async {
@@ -244,4 +251,29 @@ class Models {
     required this.id,
     required this.index,
   });
+
+  factory Models.fromJson(Map<String, dynamic> json) {
+    return Models(
+      id: json["id"],
+      index: json["index"],
+    );
+  }
+  static Map<String, dynamic> toJson(Models models) {
+    return {
+      "id": models.id,
+      "index": models.index,
+    };
+  }
+
+  static String encode(List<Models> models) => json.encode(
+        models
+            .map(
+              (e) => Models.toJson(e),
+            )
+            .toList(),
+      );
+  static List<Models> decode(String model) =>
+      (json.decode(model) as List<dynamic>)
+          .map((e) => Models.fromJson(e))
+          .toList();
 }

@@ -11,7 +11,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  await SharedPreferences.getInstance();
+
   runApp(const MyApp());
 }
 
