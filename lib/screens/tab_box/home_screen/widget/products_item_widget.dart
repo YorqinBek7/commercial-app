@@ -1,8 +1,4 @@
-import 'dart:developer';
-
-import 'package:commercial_app/data/db/local_database.dart';
 import 'package:commercial_app/models/product.dart';
-import 'package:commercial_app/screens/tab_box/home_screen/home_screen.dart';
 import 'package:flutter/material.dart';
 
 class ProductsItemWidget extends StatelessWidget {
@@ -10,13 +6,11 @@ class ProductsItemWidget extends StatelessWidget {
   List<ProductItem> data;
   int index;
 
-  List<Models> selectedElements;
   ProductsItemWidget({
     super.key,
     required this.onTap,
     required this.data,
     required this.index,
-    required this.selectedElements,
   });
 
   @override
@@ -25,7 +19,7 @@ class ProductsItemWidget extends StatelessWidget {
       children: [
         Container(
           width: double.infinity,
-          padding: EdgeInsets.all(20),
+          padding: EdgeInsets.all(5),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
             color: Colors.white,
@@ -40,12 +34,24 @@ class ProductsItemWidget extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Image.network(
-                data[index].image,
-                width: 80,
-                height: 80,
+              Spacer(),
+              data[index].image == ""
+                  ? SizedBox()
+                  : Image.network(
+                      data[index].image,
+                      width: 90,
+                      height: 90,
+                    ),
+              SizedBox(
+                height: 10,
               ),
-              Text(data[index].title),
+              Expanded(
+                child: Text(
+                  data[index].title,
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 3,
+                ),
+              ),
             ],
           ),
         ),
@@ -54,56 +60,26 @@ class ProductsItemWidget extends StatelessWidget {
           right: 0,
           child: InkWell(
             onTap: onTap,
-            child: Icon(
-              Icons.favorite,
-              color: getSelected(context) == index ? Colors.red : Colors.grey,
+            child: Container(
+              padding: EdgeInsets.all(5),
+              decoration: BoxDecoration(
+                color: Colors.grey,
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(5),
+                  bottomLeft: Radius.circular(5),
+                ),
+              ),
+              child: Text(
+                "Add to cart",
+                style: TextStyle(
+                  fontWeight: FontWeight.w500,
+                  color: Colors.white,
+                ),
+              ),
             ),
           ),
         )
       ],
     );
-  }
-
-  int getSelected(BuildContext context) {
-    int k = 0;
-    int value = -1;
-    int value2 = -1;
-    for (var i = 0; i < selectedElements.length; i++) {
-      k = 0;
-      for (var j = 0; j < selectedElements.length; j++) {
-        if (selectedElements[i].index == selectedElements[j].index) {
-          k++;
-        }
-        if (k > 1) {
-          value = i;
-          value2 = selectedElements[i].index;
-        }
-      }
-    }
-    for (var i = 0; i < selectedElements.length; i++) {
-      if (value != -1) {
-        deleteFromDatabase(id: selectedElements[i].id);
-        selectedElements.removeAt(value);
-        value = -1;
-      }
-    }
-    for (var i = 0; i < selectedElements.length; i++) {
-      if (selectedElements[i].index == value2) {
-        selectedElements.removeAt(i);
-      }
-    }
-    for (var element in selectedElements) {
-      if (element.index == index) {
-        return element.index;
-      }
-    }
-    return -1;
-  }
-
-  deleteFromDatabase({required int id}) async {
-    await LocalDataBase.deleteByID(id);
-    log(id.toString());
-    await LocalDataBase.deleteByID(id + 1);
-    log((id + 1).toString());
   }
 }

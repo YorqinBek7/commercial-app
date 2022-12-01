@@ -1,3 +1,5 @@
+import 'package:commercial_app/screens/notification_screen/notification_screen.dart';
+import 'package:commercial_app/widgets/avatar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -17,12 +19,9 @@ class CustomAppBar extends StatelessWidget implements PreferredSize {
       ),
       elevation: 0,
       backgroundColor: Colors.grey.shade100,
-      leading: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: GestureDetector(
-          onTap: onTap,
-          child: Image.asset("assets/images/avatar.png"),
-        ),
+      leading: Avatar(
+        image: null,
+        onTap: onTap,
       ),
       title: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         Text(
@@ -39,14 +38,22 @@ class CustomAppBar extends StatelessWidget implements PreferredSize {
       ]),
       actions: [
         InkWell(
-          onTap: () => {},
+          onTap: () => {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => NotificationScreen(),
+              ),
+            )
+          },
           child: Icon(
             Icons.notifications,
             size: 30,
             color: Colors.yellow,
             shadows: [
               BoxShadow(
-                color: Colors.grey,
+                color: Colors.black,
+                blurRadius: 5,
                 offset: Offset(1, 1),
               ),
             ],

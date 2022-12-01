@@ -14,6 +14,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   List<Widget> screens = [HomeTab(), CartPage()];
   int currentIndex = 0;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

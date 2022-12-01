@@ -26,11 +26,11 @@ class ProductsCubit extends Cubit<ProductsState> {
         return products;
       } else {
         emit(ProductsError(error: 'error'));
-        throw Exception();
+        return [];
       }
     } catch (e) {
       emit(ProductsError(error: e.toString()));
-      throw Exception(e);
+      return [];
     }
   }
 

@@ -23,11 +23,11 @@ class GetAllCategoriesCubit extends Cubit<GetAllCategoriesState> {
         return categories;
       } else {
         emit(GetAllCategoriesError(error: 'error'));
-        throw Exception();
+        return [];
       }
     } catch (e) {
       emit(GetAllCategoriesError(error: e.toString()));
-      throw Exception(e);
+      return [];
     }
   }
 }

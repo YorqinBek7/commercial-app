@@ -42,13 +42,16 @@ class CategoryItemWidget extends StatelessWidget {
                 color: selected != index ? Colors.black : Colors.white,
               ),
             ),
-            Text(
-              data[index],
-              textAlign: TextAlign.center,
-              overflow: TextOverflow.clip,
-              style: TextStyle(
-                color: Colors.blueGrey.shade900,
-                fontSize: 16,
+            Expanded(
+              child: Text(
+                data[index],
+                textAlign: TextAlign.center,
+                overflow: TextOverflow.clip,
+                maxLines: 1,
+                style: TextStyle(
+                  color: Colors.blueGrey.shade900,
+                  fontSize: 16,
+                ),
               ),
             ),
           ],
