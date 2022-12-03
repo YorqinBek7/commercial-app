@@ -20,6 +20,5 @@ Future<void> registerUser(
         content: Text(e.message.toString()),
       ),
     );
-    log(e.toString());
   }
 }

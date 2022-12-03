@@ -76,9 +76,6 @@ class _UserScreenState extends State<UserScreen> {
                             );
                             await sharedPreferences!
                                 .setString("image", file!.path);
-                            log(sharedPreferences!
-                                .getString("image")
-                                .toString());
                           },
                         ),
                         ListTile(
@@ -137,7 +134,6 @@ class _UserScreenState extends State<UserScreen> {
                 Navigator.pop(context);
                 await FirebaseAuth.instance.signOut();
                 await GoogleSignIn.standard().signOut();
-                log(FirebaseAuth.instance.currentUser.toString());
               },
               text: "Log Out",
             )

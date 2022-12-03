@@ -66,9 +66,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 onTap: () async {
                   try {
                     await signWithGoogle();
-                  } catch (e) {
-                    log(e.toString());
-                  }
+                  } catch (e) {}
                 },
               ),
               SizedBox(

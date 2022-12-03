@@ -19,7 +19,6 @@ Future<void> signUser(
         content: Text(e.message.toString()),
       ),
     );
-    log(e.toString());
   }
 }
 
@@ -31,5 +30,4 @@ Future<void> signWithGoogle() async {
     idToken: auth?.idToken,
   );
   await FirebaseAuth.instance.signInWithCredential(credential);
-  log(FirebaseAuth.instance.currentUser.toString());
 }
