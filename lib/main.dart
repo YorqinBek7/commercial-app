@@ -1,7 +1,9 @@
 //ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
+import 'package:commercial_app/cubits/cubit/counter_cubit.dart';
 import 'package:commercial_app/cubits/get_all_categories/get_all_categories_cubit.dart';
 import 'package:commercial_app/cubits/products/products_cubit.dart';
+import 'package:commercial_app/screens/blocTest.dart';
 import 'package:commercial_app/screens/splash_screen/splash_screen.dart';
 import 'package:commercial_app/utils/notificaton.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -31,12 +33,13 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => ProductsCubit(),
-        )
+        ),
+       
       ],
       child: MaterialApp(
         navigatorKey: navigatorKey,
         debugShowCheckedModeBanner: false,
-        home: SplashScreen(),
+        home: BlocTest(),
       ),
     );
   }

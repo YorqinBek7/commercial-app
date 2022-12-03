@@ -18,6 +18,7 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
   final Connectivity connectivity = Connectivity();
+  
   @override
   void initState() {
     init();
