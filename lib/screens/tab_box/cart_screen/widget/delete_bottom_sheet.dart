@@ -1,6 +1,5 @@
-import 'dart:developer';
-
 import 'package:commercial_app/cubits/products/products_cubit.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -109,7 +108,7 @@ void deleteBottomSheet({
                           borderRadius: BorderRadius.circular(20),
                         ),
                         child: Text(
-                          "Cancel",
+                          tr("cancel"),
                           style: TextStyle(color: Colors.black, fontSize: 16),
                         ),
                       ),
@@ -124,7 +123,7 @@ void deleteBottomSheet({
                           color: Colors.black,
                         ),
                         child: Text(
-                          "Yes, Remove",
+                          tr("yes_remove"),
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 16,

@@ -1,9 +1,8 @@
 // ignore_for_file: prefer_const_constructors
-import 'dart:developer';
-
 import 'package:commercial_app/cubits/products/products_cubit.dart';
 import 'package:commercial_app/data/db/local_database.dart';
 import 'package:commercial_app/screens/tab_box/cart_screen/widget/delete_bottom_sheet.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -81,7 +80,7 @@ class _CustomCartsItemState extends State<CustomCartsItem> {
                 Row(
                   children: [
                     Text(
-                        "Rate: ${context.read<ProductsCubit>().storageProducts[widget.index].rate}"),
+                        "${tr("rate")}: ${context.read<ProductsCubit>().storageProducts[widget.index].rate}"),
                     Icon(Icons.star, color: Colors.yellow)
                   ],
                 ),
@@ -159,7 +158,7 @@ class _CustomCartsItemState extends State<CustomCartsItem> {
                             } else {
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(
-                                  content: Text("Mahsulot qolmadi!"),
+                                  content: Text(tr("no_product")),
                                 ),
                               );
                             }

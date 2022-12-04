@@ -6,6 +6,7 @@ import 'package:commercial_app/cubits/check_connection/check_connection_cubit.da
 import 'package:commercial_app/screens/no_internet_screen/no_internet_screen.dart';
 import 'package:commercial_app/screens/tab_box/cart_screen/cart_screen.dart';
 import 'package:commercial_app/screens/tab_box/home_screen/home_screen.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -56,11 +57,11 @@ class _HomePageState extends State<HomePage> {
           items: [
             BottomNavigationBarItem(
               icon: Icon(Icons.home_outlined),
-              label: "Home",
+              label: tr("home"),
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.shopping_basket_outlined),
-              label: "Cart",
+              label: tr("cart"),
             ),
           ],
         ),

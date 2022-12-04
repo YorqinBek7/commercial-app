@@ -1,5 +1,4 @@
 // ignore_for_file: prefer_const_constructors
-import 'dart:developer';
 
 import 'package:commercial_app/screens/auth/extansions/sign_in_user.dart';
 import 'package:commercial_app/screens/auth/login_screen.dart';
@@ -8,8 +7,8 @@ import 'package:commercial_app/screens/auth/widgets/changer_login_and_register.d
 import 'package:commercial_app/screens/auth/widgets/field_for_text.dart';
 import 'package:commercial_app/screens/auth/widgets/line_widget.dart';
 import 'package:commercial_app/screens/auth/widgets/login_with_button.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:email_validator/email_validator.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import 'extansions/register_user.dart';
@@ -51,7 +50,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
               ),
               SizedBox(height: 40),
               Text(
-                "Sign Up",
+                tr("sign_up"),
                 style: TextStyle(
                     color: Colors.blue,
                     fontSize: 34,
@@ -67,21 +66,21 @@ class _RegisterScreenState extends State<RegisterScreen> {
               ),
               SizedBox(height: 30),
               Row(
-                children: const [
+                children: [
                   LineWidget(),
-                  Text("Or"),
+                  Text(tr("or")),
                   LineWidget(),
                 ],
               ),
               SizedBox(height: 30),
               FieldForText(
-                hintText: "Name",
+                hintText: tr("name"),
                 controller: nameController,
                 validator: (String? value) {
                   if (value == null || value.isEmpty) {
-                    return "Please enter something!";
+                    return tr("please_enter_something");
                   } else if (value.length < 3) {
-                    return "Name length should be longer than 3";
+                    return tr("name_length");
                   }
                   return null;
                 },
@@ -92,16 +91,16 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 controller: emailController,
                 validator: (String? value) {
                   if (value == null || value.isEmpty) {
-                    return "Please enter something!";
+                    return tr("please_enter_something");
                   } else if (!EmailValidator.validate(value)) {
-                    return "Please enter correct email!";
+                    return tr("please_enter_correct_email");
                   }
                   return null;
                 },
               ),
               SizedBox(height: 16),
               FieldForText(
-                hintText: "Password",
+                hintText: tr("password"),
                 isObscure: isHidePassword,
                 onTap: () {
                   setState(
@@ -114,7 +113,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 controller: passwordController,
                 validator: (String? value) {
                   if (value == null || value.isEmpty) {
-                    return "Please enter something!";
+                    return tr("please_enter_something");
                   }
                   return null;
                 },
@@ -129,7 +128,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     context: context,
                   );
                 },
-                text: "Create Account",
+                text: tr("create_account"),
               ),
               SizedBox(height: 16),
               ChangerLoginAndRegister(
@@ -141,8 +140,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     ),
                   );
                 },
-                txt1: 'Do you have account?',
-                txt2: ' Sign in',
+                txt1: tr("do_you_have_an_account"),
+                txt2: ' ${tr('sign_in')}',
               ),
             ],
           ),

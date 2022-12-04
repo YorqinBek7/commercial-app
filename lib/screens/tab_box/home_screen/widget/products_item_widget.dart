@@ -1,4 +1,5 @@
 import 'package:commercial_app/models/product.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 class ProductsItemWidget extends StatelessWidget {
@@ -70,7 +71,7 @@ class ProductsItemWidget extends StatelessWidget {
                 ),
               ),
               child: Text(
-                "Add to cart",
+                tr("add_to_cart"),
                 style: TextStyle(
                   fontWeight: FontWeight.w500,
                   color: Colors.white,

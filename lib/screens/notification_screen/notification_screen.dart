@@ -1,6 +1,5 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 
 class NotificationScreen extends StatelessWidget {
   const NotificationScreen({super.key});
@@ -21,7 +20,7 @@ class NotificationScreen extends StatelessWidget {
         ),
         centerTitle: true,
         title: Text(
-          "Notifications",
+          tr("notifications"),
           style: TextStyle(
             color: Colors.black,
             fontSize: 24,

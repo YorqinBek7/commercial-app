@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:commercial_app/main.dart';
 import 'package:commercial_app/screens/notification_screen/notification_screen.dart';
 import 'package:flutter/material.dart';

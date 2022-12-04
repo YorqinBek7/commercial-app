@@ -1,8 +1,6 @@
-import 'dart:developer';
 import 'dart:io';
 
 import 'package:commercial_app/cubits/change_user_info/change_user_info_cubit.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -65,4 +63,3 @@ class Avatar extends StatelessWidget {
     );
   }
 }
-// FirebaseAuth.instance.currentUser!.photoURL!

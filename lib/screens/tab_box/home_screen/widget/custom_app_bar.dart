@@ -1,5 +1,6 @@
 import 'package:commercial_app/screens/notification_screen/notification_screen.dart';
 import 'package:commercial_app/widgets/avatar.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -31,7 +32,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSize {
           height: 5,
         ),
         Text(
-          FirebaseAuth.instance.currentUser?.displayName! ?? "",
+          FirebaseAuth.instance.currentUser!.displayName ?? "",
           style: TextStyle(color: Colors.blueGrey.shade900, fontSize: 17),
         ),
       ]),
@@ -74,10 +75,10 @@ class CustomAppBar extends StatelessWidget implements PreferredSize {
 
 String getTime() {
   if (DateTime.now().hour >= 4 && DateTime.now().hour < 12) {
-    return "Good Morning";
+    return tr("good_morning");
   } else if (DateTime.now().hour >= 12 && DateTime.now().hour < 18) {
-    return "Good Afternoon";
+    return tr("good_afternoon");
   } else {
-    return "Good Night";
+    return tr("good_night");
   }
 }

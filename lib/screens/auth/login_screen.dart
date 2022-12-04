@@ -8,6 +8,7 @@ import 'package:commercial_app/screens/auth/widgets/changer_login_and_register.d
 import 'package:commercial_app/screens/auth/widgets/field_for_text.dart';
 import 'package:commercial_app/screens/auth/widgets/line_widget.dart';
 import 'package:commercial_app/screens/auth/widgets/login_with_button.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 import 'extansions/sign_in_user.dart';
@@ -50,7 +51,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 height: 40,
               ),
               Text(
-                "Sign In",
+                tr("sign_in"),
                 style: TextStyle(
                   color: Colors.blue,
                   fontSize: 34,
@@ -73,9 +74,9 @@ class _LoginScreenState extends State<LoginScreen> {
                 height: 30,
               ),
               Row(
-                children: const [
+                children: [
                   LineWidget(),
-                  Text("Or"),
+                  Text(tr("or")),
                   LineWidget(),
                 ],
               ),
@@ -90,7 +91,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 height: 16,
               ),
               FieldForText(
-                hintText: "Password",
+                hintText: tr("password"),
                 isObscure: isHidePassword,
                 onTap: () {
                   setState(() => {
@@ -116,7 +117,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       );
                     },
                     child: Text(
-                      "Forgot Password?",
+                      tr("forgot_password"),
                       style: TextStyle(color: Colors.grey),
                     ),
                   )
@@ -133,7 +134,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     context: context,
                   );
                 },
-                text: 'Log in',
+                text: tr("log_in"),
               ),
               SizedBox(
                 height: 16,
@@ -147,8 +148,8 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   );
                 },
-                txt1: "Don't have account?",
-                txt2: " Sign Up",
+                txt1: tr("dont_have_an_account"),
+                txt2: " ${tr("sign_up")}",
               )
             ],
           ),

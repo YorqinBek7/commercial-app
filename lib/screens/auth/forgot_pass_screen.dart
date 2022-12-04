@@ -1,5 +1,6 @@
 import 'package:commercial_app/screens/auth/widgets/auth_button.dart';
 import 'package:commercial_app/screens/auth/widgets/field_for_text.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -38,7 +39,7 @@ class ForgotPasswordScreen extends StatelessWidget {
                 height: 42,
               ),
               Text(
-                "Forget Password",
+                tr("restore_password"),
                 style: TextStyle(
                     color: Colors.blue,
                     fontSize: 32,
@@ -48,7 +49,7 @@ class ForgotPasswordScreen extends StatelessWidget {
                 height: 24,
               ),
               Text(
-                "If you can't find the message in your email, please check your spam",
+                "message_about_forgot_password",
                 style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.w500,
@@ -59,13 +60,13 @@ class ForgotPasswordScreen extends StatelessWidget {
                 height: 24,
               ),
               FieldForText(
-                hintText: "Enter your email",
+                hintText: tr("enter_your_email"),
                 controller: emailController,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return "Please enter something!";
+                    return tr("please_enter_somthing");
                   } else if (!EmailValidator.validate(value)) {
-                    return "Please enter correct email!";
+                    return tr("please_enter_correct_email");
                   }
                   return null;
                 },
@@ -74,24 +75,25 @@ class ForgotPasswordScreen extends StatelessWidget {
                 height: 32,
               ),
               AuthButton(
-                  onTap: () async {
-                    try {
-                      await FirebaseAuth.instance.sendPasswordResetEmail(
-                          email: emailController.text.trim());
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text("Reset password sent to your email"),
-                        ),
-                      );
-                    } on FirebaseAuthException catch (e) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text(e.message.toString()),
-                        ),
-                      );
-                    }
-                  },
-                  text: "Continue")
+                onTap: () async {
+                  try {
+                    await FirebaseAuth.instance.sendPasswordResetEmail(
+                        email: emailController.text.trim());
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text(tr("reset_password_sent")),
+                      ),
+                    );
+                  } on FirebaseAuthException catch (e) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text(e.message.toString()),
+                      ),
+                    );
+                  }
+                },
+                text: tr("continue"),
+              )
             ],
           ),
         ),

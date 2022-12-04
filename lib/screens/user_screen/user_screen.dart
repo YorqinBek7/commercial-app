@@ -1,10 +1,14 @@
+import 'package:commercial_app/cubits/select_language/select_language_cubit.dart';
 import 'package:commercial_app/screens/auth/widgets/auth_button.dart';
 import 'package:commercial_app/screens/user_screen/widget/select_option.dart';
 import 'package:commercial_app/screens/user_screen/widget/show_bottom_sheet.dart';
 import 'package:commercial_app/widgets/avatar.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:http/http.dart';
 import 'package:image_picker/image_picker.dart';
 
 class UserScreen extends StatefulWidget {
@@ -19,6 +23,7 @@ class _UserScreenState extends State<UserScreen> {
   final ImagePicker imagePicker = ImagePicker();
   final TextEditingController textEditingController = TextEditingController();
   final FocusNode focusNode = FocusNode();
+  int selectLanguage = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -61,7 +66,7 @@ class _UserScreenState extends State<UserScreen> {
               controller: textEditingController,
               focusNode: focusNode,
               decoration: InputDecoration(
-                hintText: "Change user name",
+                hintText: tr("change_name"),
                 suffixIcon: IconButton(
                   icon: Icon(
                     Icons.done,
@@ -70,8 +75,8 @@ class _UserScreenState extends State<UserScreen> {
                     focusNode.unfocus();
                     if (textEditingController.text.isEmpty) {
                       ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content: Text("Please enter something!"),
+                        SnackBar(
+                          content: Text(tr("please_enter_something")),
                           duration: Duration(seconds: 1),
                         ),
                       );
@@ -100,21 +105,75 @@ class _UserScreenState extends State<UserScreen> {
                     setState(() {});
                   }
                 },
-                text: "Change name"),
+                text: tr("change_name")),
             SizedBox(height: 10),
             SelectOptionsWidget(
               icon: Icons.language_outlined,
-              text: 'Language',
-              onTap: () {},
+              text: tr('language'),
+              onTap: () {
+                showDialog(
+                  context: context,
+                  builder: (context) =>
+                      StatefulBuilder(builder: (context, setState) {
+                    return AlertDialog(
+                      content: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Builder(builder: (context) {
+                            return ListTile(
+                              title: Text("Uzbek"),
+                              trailing: Text("🇺🇿"),
+                              selected: selectLanguage == 0,
+                              selectedTileColor: Colors.blue.withOpacity(0.1),
+                              selectedColor: Colors.green,
+                              onTap: () {
+                                setState(
+                                  () {
+                                    selectLanguage = 0;
+                                    context
+                                        .read<SelectLanguageCubit>()
+                                        .selectUzbekLanguage();
+                                    context.setLocale(const Locale('uz', 'UZ'));
+                                    Navigator.pop(context);
+                                  },
+                                );
+                              },
+                            );
+                          }),
+                          ListTile(
+                            title: Text("English"),
+                            trailing: Text("🏴󠁧󠁢󠁥󠁮󠁧󠁿"),
+                            selected: selectLanguage == 1,
+                            selectedTileColor: Colors.blue.withOpacity(0.1),
+                            selectedColor: Colors.green,
+                            onTap: () {
+                              setState(
+                                () {
+                                  selectLanguage = 1;
+                                  context
+                                      .read<SelectLanguageCubit>()
+                                      .selectEnglandLanguage();
+                                  context.setLocale(const Locale('en', 'EN'));
+                                  Navigator.pop(context);
+                                },
+                              );
+                            },
+                          ),
+                        ],
+                      ),
+                    );
+                  }),
+                );
+              },
             ),
             SelectOptionsWidget(
               icon: Icons.privacy_tip_outlined,
-              text: 'Privacy Police',
+              text: tr('privacy_police'),
               onTap: () {},
             ),
             SelectOptionsWidget(
               icon: Icons.people_alt,
-              text: 'About',
+              text: tr('about'),
               onTap: () {},
             ),
             Spacer(),
@@ -124,7 +183,7 @@ class _UserScreenState extends State<UserScreen> {
                 await FirebaseAuth.instance.signOut();
                 await GoogleSignIn.standard().signOut();
               },
-              text: "Log Out",
+              text: tr("log_out"),
             )
           ],
         ),
@@ -137,7 +196,7 @@ class _UserScreenState extends State<UserScreen> {
         .updateDisplayName(textEditingController.text);
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: Text("User name successfuly changed"),
+        content: Text(tr("snackbar_success_change_name")),
       ),
     );
   }

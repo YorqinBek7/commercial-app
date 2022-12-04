@@ -19,6 +19,7 @@ dependencies:
   flutter_svg: ^1.1.6
   lottie: ^2.0.0
   adaptive_theme: ^3.1.1
+  easy_localization: ^3.0.1
 
   #Firebase
   firebase_auth: ^4.1.4
@@ -43,8 +44,6 @@ dependencies:
   connectivity_plus: ^3.0.2
   equatable: ^2.0.5
   formz: ^0.4.1
-  
-  
 
 dev_dependencies:
   flutter_test:
@@ -60,6 +59,7 @@ flutter:
     - assets/images/
     - assets/svg/
     - assets/lotties/
+    - assets/translations/
 
   fonts:
     - family: Neom
