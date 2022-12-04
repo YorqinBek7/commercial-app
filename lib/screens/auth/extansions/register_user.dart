@@ -13,7 +13,7 @@ Future<void> registerUser(
       email: email,
       password: password,
     );
-    FirebaseAuth.instance.currentUser?.updateDisplayName(name);
+    await FirebaseAuth.instance.currentUser?.updateDisplayName(name);
   } on FirebaseAuthException catch (e) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(

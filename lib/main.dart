@@ -55,20 +55,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
-class App extends StatelessWidget {
-  const App({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return StreamBuilder(
-      stream: FirebaseAuth.instance.authStateChanges(),
-      builder: (context, snapshot) {
-        if (snapshot.hasData) {
-          return HomePage();
-        }
-        return LoginScreen();
-      },
-    );
-  }
-}

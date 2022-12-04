@@ -1,4 +1,6 @@
 // ignore_for_file: prefer_const_constructors
+import 'dart:developer';
+
 import 'package:commercial_app/screens/auth/extansions/sign_in_user.dart';
 import 'package:commercial_app/screens/auth/login_screen.dart';
 import 'package:commercial_app/screens/auth/widgets/auth_button.dart';
@@ -7,6 +9,7 @@ import 'package:commercial_app/screens/auth/widgets/field_for_text.dart';
 import 'package:commercial_app/screens/auth/widgets/line_widget.dart';
 import 'package:commercial_app/screens/auth/widgets/login_with_button.dart';
 import 'package:email_validator/email_validator.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import 'extansions/register_user.dart';
@@ -125,6 +128,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     password: passwordController.text,
                     context: context,
                   );
+                  FirebaseAuth.instance.authStateChanges().listen((event) {
+                    log(event.toString());
+                  });
                 },
                 text: "Create Account",
               ),

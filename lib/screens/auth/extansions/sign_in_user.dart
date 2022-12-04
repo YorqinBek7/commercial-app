@@ -24,10 +24,12 @@ Future<void> signUser(
 
 Future<void> signWithGoogle() async {
   final GoogleSignInAccount? googleAccount = await GoogleSignIn().signIn();
+
   final GoogleSignInAuthentication? auth = await googleAccount?.authentication;
   final credential = GoogleAuthProvider.credential(
     accessToken: auth?.accessToken,
     idToken: auth?.idToken,
   );
+
   await FirebaseAuth.instance.signInWithCredential(credential);
 }
