@@ -1,4 +1,6 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
+import 'dart:developer';
+
 import 'package:commercial_app/cubits/get_all_categories/get_all_categories_cubit.dart';
 import 'package:commercial_app/cubits/products/products_cubit.dart';
 import 'package:commercial_app/data/db/cached_products.dart';
@@ -15,7 +17,6 @@ import 'package:commercial_app/screens/user_screen/user_screen.dart';
 import 'package:commercial_app/utils/notificaton.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 class HomeTab extends StatefulWidget {
   const HomeTab({super.key});
@@ -33,6 +34,7 @@ class _HomeTabState extends State<HomeTab> {
   @override
   void initState() {
     _init();
+
     super.initState();
   }
 

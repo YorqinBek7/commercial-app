@@ -26,7 +26,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   _init() {
-    log("message");
+    setState(() {});
   }
 
   @override

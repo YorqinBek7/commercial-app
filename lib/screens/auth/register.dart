@@ -128,9 +128,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     password: passwordController.text,
                     context: context,
                   );
-                  FirebaseAuth.instance.authStateChanges().listen((event) {
-                    log(event.toString());
-                  });
                 },
                 text: "Create Account",
               ),

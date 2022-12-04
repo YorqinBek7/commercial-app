@@ -20,7 +20,6 @@ class CustomAppBar extends StatelessWidget implements PreferredSize {
       elevation: 0,
       backgroundColor: Colors.grey.shade100,
       leading: Avatar(
-        image: null,
         onTap: onTap,
       ),
       title: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
@@ -32,7 +31,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSize {
           height: 5,
         ),
         Text(
-          FirebaseAuth.instance.currentUser!.displayName!,
+          FirebaseAuth.instance.currentUser?.displayName! ?? "",
           style: TextStyle(color: Colors.blueGrey.shade900, fontSize: 17),
         ),
       ]),

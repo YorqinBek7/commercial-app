@@ -1,12 +1,12 @@
 import 'dart:developer';
-import 'dart:io';
 
-import 'package:commercial_app/main.dart';
+import 'package:commercial_app/cubits/change_user_info/change_user_info_cubit.dart';
 import 'package:commercial_app/screens/auth/widgets/auth_button.dart';
 import 'package:commercial_app/screens/user_screen/widget/select_option.dart';
 import 'package:commercial_app/widgets/avatar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -43,7 +43,6 @@ class _UserScreenState extends State<UserScreen> {
         child: Column(
           children: [
             Avatar(
-              image: file,
               onTap: () async {
                 showModalBottomSheet(
                   context: context,
@@ -60,26 +59,29 @@ class _UserScreenState extends State<UserScreen> {
                           ),
                         ),
                         SizedBox(height: 5),
-                        ListTile(
-                          title: Text(
-                            "Select from Camera",
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w500,
+                        Builder(builder: (context) {
+                          return ListTile(
+                            title: Text(
+                              "Select from Camera",
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.w500,
+                              ),
                             ),
-                          ),
-                          trailing: Icon(Icons.camera_alt_outlined),
-                          onTap: () async {
-                            Navigator.pop(context);
-                            file = await imagePicker.pickImage(
-                              source: ImageSource.camera,
-                            );
-                            await sharedPreferences!
-                                .setString("image", file!.path);
-                          },
-                        ),
+                            trailing: Icon(Icons.camera_alt_outlined),
+                            onTap: () async {
+                              file = await imagePicker.pickImage(
+                                source: ImageSource.camera,
+                              );
+
+                              await FirebaseAuth.instance.currentUser!
+                                  .updatePhotoURL(file!.path);
+                              //   Navigator.pop(context);
+                            },
+                          );
+                        }),
                         ListTile(
-                          title: Text(
+                          title: const Text(
                             "Select from Gallery",
                             style: TextStyle(
                               fontSize: 16,
@@ -88,13 +90,19 @@ class _UserScreenState extends State<UserScreen> {
                           ),
                           trailing: Icon(Icons.image),
                           onTap: () async {
+                            log(BlocProvider.of<ChangeUserInfoCubit>(context)
+                                .imageUrl);
                             Navigator.pop(context);
                             file = await imagePicker.pickImage(
                               source: ImageSource.gallery,
                             );
-                            await sharedPreferences!
-                                .setString("image", file!.path);
-
+                            await FirebaseAuth.instance.currentUser!
+                                .updatePhotoURL(file!.path);
+                            log("123123");
+                            context.read<ChangeUserInfoCubit>().imageUrl =
+                                "LOOO";
+                            log(context.read<ChangeUserInfoCubit>().imageUrl);
+                            log("message2");
                             setState(() {});
                           },
                         ),
