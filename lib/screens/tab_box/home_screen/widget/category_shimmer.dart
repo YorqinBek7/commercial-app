@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shimmer/shimmer.dart';
 
 class CategoryShimmer extends StatelessWidget {
@@ -15,14 +16,14 @@ class CategoryShimmer extends StatelessWidget {
           baseColor: Colors.grey.shade300,
           highlightColor: Colors.white,
           child: Container(
-            width: 70,
-            height: 70,
-            margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-            padding: EdgeInsets.all(20),
+            width: 70.w,
+            height: 70.h,
+            margin: EdgeInsets.symmetric(horizontal: 10.w, vertical: 5.h),
+            padding: EdgeInsets.all(20.r),
             decoration: BoxDecoration(
-                border: Border.all(color: Colors.black, width: 1),
+                border: Border.all(color: Colors.black, width: 1.w),
                 shape: BoxShape.circle,
-                boxShadow: [
+                boxShadow: const [
                   BoxShadow(
                     color: Colors.grey,
                     offset: Offset(1, 1),

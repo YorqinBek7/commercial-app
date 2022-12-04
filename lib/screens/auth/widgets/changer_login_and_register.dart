@@ -20,11 +20,11 @@ class ChangerLoginAndRegister extends StatelessWidget {
           children: [
             TextSpan(
               text: txt1,
-              style: TextStyle(color: Colors.black),
+              style: const TextStyle(color: Colors.black),
             ),
             TextSpan(
               text: txt2,
-              style: TextStyle(color: Colors.blue),
+              style: const TextStyle(color: Colors.blue),
             ),
           ],
         ),

@@ -1,7 +1,3 @@
-// ignore_for_file: use_build_context_synchronously
-
-import 'dart:developer';
-
 import 'package:commercial_app/screens/auth/login_screen.dart';
 import 'package:commercial_app/screens/home.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -25,12 +21,11 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   void init() async {
-    // context.read<AuthCheckerCubit>().userChecker();
     await Future.delayed(const Duration(seconds: 3));
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(
-        builder: (context) => App(),
+        builder: (context) => const App(),
       ),
     );
   }
@@ -54,9 +49,9 @@ class App extends StatelessWidget {
       stream: FirebaseAuth.instance.authStateChanges(),
       builder: (context, snapshot) {
         if (snapshot.hasData) {
-          return HomePage();
+          return const HomePage();
         }
-        return LoginScreen();
+        return const LoginScreen();
       },
     );
   }

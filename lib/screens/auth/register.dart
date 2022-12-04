@@ -1,5 +1,3 @@
-// ignore_for_file: prefer_const_constructors
-
 import 'package:commercial_app/screens/auth/extansions/sign_in_user.dart';
 import 'package:commercial_app/screens/auth/login_screen.dart';
 import 'package:commercial_app/screens/auth/widgets/auth_button.dart';
@@ -10,6 +8,7 @@ import 'package:commercial_app/screens/auth/widgets/login_with_button.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'extansions/register_user.dart';
 
@@ -34,29 +33,30 @@ class _RegisterScreenState extends State<RegisterScreen> {
         elevation: 0,
       ),
       body: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: EdgeInsets.all(8.0.r),
         child: SingleChildScrollView(
           child: Column(
             children: [
               Container(
-                padding: EdgeInsets.all(10),
+                padding: EdgeInsets.all(10.r),
                 decoration: BoxDecoration(
                     color: Colors.blue.withOpacity(.1),
-                    borderRadius: BorderRadius.circular(10)),
+                    borderRadius: BorderRadius.circular(10.r)),
                 child: Text(
                   "👏",
-                  style: TextStyle(fontSize: 60),
+                  style: TextStyle(fontSize: 60.sp),
                 ),
               ),
-              SizedBox(height: 40),
+              SizedBox(height: 40.h),
               Text(
                 tr("sign_up"),
                 style: TextStyle(
-                    color: Colors.blue,
-                    fontSize: 34,
-                    fontWeight: FontWeight.bold),
+                  color: Colors.blue,
+                  fontSize: 34.sp,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
-              SizedBox(height: 24),
+              SizedBox(height: 24.h),
               LoginWithButton(
                 imagePath: "assets/svg/google.svg",
                 title: 'Google',
@@ -64,15 +64,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   await signWithGoogle();
                 },
               ),
-              SizedBox(height: 30),
+              SizedBox(height: 30.h),
               Row(
                 children: [
-                  LineWidget(),
+                  const LineWidget(),
                   Text(tr("or")),
-                  LineWidget(),
+                  const LineWidget(),
                 ],
               ),
-              SizedBox(height: 30),
+              SizedBox(height: 30.h),
               FieldForText(
                 hintText: tr("name"),
                 controller: nameController,
@@ -85,7 +85,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   return null;
                 },
               ),
-              SizedBox(height: 16),
+              SizedBox(height: 16.h),
               FieldForText(
                 hintText: "Email/Phone Number",
                 controller: emailController,
@@ -98,7 +98,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   return null;
                 },
               ),
-              SizedBox(height: 16),
+              SizedBox(height: 16.h),
               FieldForText(
                 hintText: tr("password"),
                 isObscure: isHidePassword,
@@ -118,7 +118,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   return null;
                 },
               ),
-              SizedBox(height: 16),
+              SizedBox(height: 16.h),
               AuthButton(
                 onTap: () async {
                   await registerUser(
@@ -130,7 +130,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 },
                 text: tr("create_account"),
               ),
-              SizedBox(height: 16),
+              SizedBox(height: 16.h),
               ChangerLoginAndRegister(
                 onTap: () {
                   Navigator.push(

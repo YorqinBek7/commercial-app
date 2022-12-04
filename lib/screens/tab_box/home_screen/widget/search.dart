@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class SearchField extends StatelessWidget {
   final ValueChanged onChanged;
@@ -17,10 +18,10 @@ class SearchField extends StatelessWidget {
           color: Colors.blueGrey.shade900,
         ),
         hintText: "Search",
-        hintStyle: TextStyle(color: Colors.blueGrey.shade900, fontSize: 14),
+        hintStyle: TextStyle(color: Colors.blueGrey.shade900, fontSize: 14.sp),
         enabledBorder: OutlineInputBorder(
           borderSide: BorderSide(
-            width: 1,
+            width: 1.w,
             color: Colors.blueGrey.shade900,
           ),
           borderRadius: BorderRadius.circular(10),

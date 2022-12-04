@@ -1,10 +1,10 @@
-// ignore_for_file: prefer_const_constructors
 import 'package:commercial_app/cubits/products/products_cubit.dart';
 import 'package:commercial_app/data/db/local_database.dart';
 import 'package:commercial_app/screens/tab_box/cart_screen/widget/delete_bottom_sheet.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CustomCartsItem extends StatefulWidget {
   final int index;
@@ -33,14 +33,14 @@ class _CustomCartsItemState extends State<CustomCartsItem> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(15),
-      margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+      padding: EdgeInsets.all(15.r),
+      margin: EdgeInsets.symmetric(horizontal: 10.w, vertical: 10.h),
       color: Colors.white,
       child: Row(
         children: [
           SizedBox(
-            width: 80,
-            height: 80,
+            width: 80.w,
+            height: 80.h,
             child: Image.network(
               context.read<ProductsCubit>().storageProducts[widget.index].image,
             ),
@@ -60,7 +60,7 @@ class _CustomCartsItemState extends State<CustomCartsItem> {
                             .title,
                       ),
                     ),
-                    Spacer(),
+                    const Spacer(),
                     GestureDetector(
                       onTap: () async {
                         deleteBottomSheet(
@@ -69,33 +69,33 @@ class _CustomCartsItemState extends State<CustomCartsItem> {
                           deleteId: widget.deleteId,
                         );
                       },
-                      child: Icon(
+                      child: const Icon(
                         Icons.delete,
                         color: Colors.pinkAccent,
                       ),
                     )
                   ],
                 ),
-                SizedBox(height: 10),
+                SizedBox(height: 10.h),
                 Row(
                   children: [
                     Text(
                         "${tr("rate")}: ${context.read<ProductsCubit>().storageProducts[widget.index].rate}"),
-                    Icon(Icons.star, color: Colors.yellow)
+                    const Icon(Icons.star, color: Colors.yellow)
                   ],
                 ),
-                SizedBox(height: 10),
+                SizedBox(height: 10.h),
                 Row(
                   children: [
                     Text(
                         "\$${context.read<ProductsCubit>().storageProducts[widget.index].price}"),
-                    Spacer(),
+                    const Spacer(),
                     Container(
                       padding:
-                          EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                          EdgeInsets.symmetric(horizontal: 10.w, vertical: 5.h),
                       decoration: BoxDecoration(
                         color: Colors.grey.shade300,
-                        borderRadius: BorderRadius.circular(10),
+                        borderRadius: BorderRadius.circular(10.r),
                       ),
                       child: Row(children: [
                         TextButton(
@@ -119,21 +119,21 @@ class _CustomCartsItemState extends State<CustomCartsItem> {
                             }
                             setState(() {});
                           },
-                          child: const Text(
+                          child: Text(
                             "-",
-                            style: TextStyle(fontSize: 18),
+                            style: TextStyle(fontSize: 18.sp),
                           ),
                         ),
-                        SizedBox(width: 10),
+                        SizedBox(width: 10.w),
                         Text(
                           context
                               .read<ProductsCubit>()
                               .storageProducts[widget.index]
                               .countSelect
                               .toString(),
-                          style: TextStyle(fontSize: 18),
+                          style: TextStyle(fontSize: 18.sp),
                         ),
-                        SizedBox(width: 10),
+                        SizedBox(width: 10.w),
                         TextButton(
                           onPressed: () async {
                             if (context
@@ -166,7 +166,7 @@ class _CustomCartsItemState extends State<CustomCartsItem> {
                           },
                           child: Text(
                             "+",
-                            style: TextStyle(fontSize: 18),
+                            style: TextStyle(fontSize: 18.sp),
                           ),
                         )
                       ]),

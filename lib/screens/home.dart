@@ -1,7 +1,3 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
-
-import 'dart:developer';
-
 import 'package:commercial_app/cubits/check_connection/check_connection_cubit.dart';
 import 'package:commercial_app/screens/no_internet_screen/no_internet_screen.dart';
 import 'package:commercial_app/screens/tab_box/cart_screen/cart_screen.dart';
@@ -18,16 +14,11 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  List<Widget> screens = [HomeTab(), CartPage()];
+  List<Widget> screens = [const HomeTab(), const CartPage()];
   int currentIndex = 0;
   @override
   void initState() {
-    _init();
     super.initState();
-  }
-
-  _init() {
-    setState(() {});
   }
 
   @override
@@ -38,7 +29,7 @@ class _HomePageState extends State<HomePage> {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => NoInternetScreen(voidCallback: _init),
+              builder: (context) => NoInternetScreen(),
             ),
           );
         }
@@ -56,11 +47,11 @@ class _HomePageState extends State<HomePage> {
           currentIndex: currentIndex,
           items: [
             BottomNavigationBarItem(
-              icon: Icon(Icons.home_outlined),
+              icon: const Icon(Icons.home_outlined),
               label: tr("home"),
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.shopping_basket_outlined),
+              icon: const Icon(Icons.shopping_basket_outlined),
               label: tr("cart"),
             ),
           ],

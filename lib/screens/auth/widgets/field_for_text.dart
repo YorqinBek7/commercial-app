@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class FieldForText extends StatelessWidget {
   final String hintText;
@@ -27,10 +28,11 @@ class FieldForText extends StatelessWidget {
         controller: controller,
         obscureText: isObscure ?? false,
         decoration: InputDecoration(
-          contentPadding: EdgeInsets.symmetric(horizontal: 18, vertical: 24),
+          contentPadding:
+              EdgeInsets.symmetric(horizontal: 18.w, vertical: 24.h),
           hintText: hintText,
           border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(14),
+              borderRadius: BorderRadius.circular(14.r),
               borderSide: BorderSide.none),
           fillColor: Colors.blue.withOpacity(.1),
           filled: true,

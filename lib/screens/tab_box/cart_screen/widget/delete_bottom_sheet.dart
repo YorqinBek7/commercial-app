@@ -1,7 +1,9 @@
 import 'package:commercial_app/cubits/products/products_cubit.dart';
+import 'package:commercial_app/screens/tab_box/cart_screen/widget/bottom_sheet_dialog.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 void deleteBottomSheet({
   required BuildContext context,
@@ -11,127 +13,114 @@ void deleteBottomSheet({
   showBottomSheet(
     context: context,
     builder: (BuildContext context) => SizedBox(
-      height: 270,
+      height: 200.h,
       child: BottomSheet(
         builder: (BuildContext context) {
           return Container(
             color: Colors.grey.shade200,
-            margin: EdgeInsets.symmetric(horizontal: 10),
+            margin: EdgeInsets.symmetric(horizontal: 10.w),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                const Text(
+                Text(
                   "Remove From Cart?",
                   style: TextStyle(
                       color: Colors.black,
-                      fontSize: 24,
+                      fontSize: 24.sp,
                       fontWeight: FontWeight.bold),
                 ),
-                Row(
-                  children: [
-                    Container(
-                      padding: EdgeInsets.all(5),
-                      decoration: BoxDecoration(
-                        border: Border.all(width: 1, color: Colors.grey),
-                        color: Colors.white10,
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      width: 70,
-                      height: 70,
-                      child: Image.network(
-                        context
-                            .read<ProductsCubit>()
-                            .storageProducts[index]
-                            .image,
-                      ),
-                    ),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Text(
-                          context
-                                      .read<ProductsCubit>()
-                                      .storageProducts[index]
-                                      .title
-                                      .length <
-                                  25
-                              ? context
-                                  .read<ProductsCubit>()
-                                  .storageProducts[index]
-                                  .title
-                              : "${context.read<ProductsCubit>().storageProducts[index].title.substring(0, 25)}...",
-                          style: TextStyle(color: Colors.black, fontSize: 16),
+                SizedBox(height: 15.h),
+                Expanded(
+                  flex: 2,
+                  child: Row(
+                    children: [
+                      Container(
+                        padding: EdgeInsets.all(5.r),
+                        decoration: BoxDecoration(
+                          border: Border.all(width: 1.w, color: Colors.grey),
+                          color: Colors.white10,
+                          borderRadius: BorderRadius.circular(10),
                         ),
-                        Text(
+                        width: 100.w,
+                        height: 100.h,
+                        child: Image.network(
                           context
                               .read<ProductsCubit>()
                               .storageProducts[index]
-                              .rate
-                              .toString(),
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 16,
-                          ),
+                              .image,
                         ),
-                        Text(
-                          context
-                              .read<ProductsCubit>()
-                              .storageProducts[index]
-                              .price
-                              .toString(),
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 16,
-                          ),
-                        )
-                      ],
-                    ),
-                  ],
+                      ),
+                      SizedBox(
+                        width: 10.w,
+                      ),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Expanded(
+                              child: Text(
+                                context
+                                    .read<ProductsCubit>()
+                                    .storageProducts[index]
+                                    .title,
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle(
+                                    color: Colors.black, fontSize: 16.sp),
+                              ),
+                            ),
+                            Expanded(
+                              child: Row(
+                                children: [
+                                  Text(
+                                    "${tr("rate")}: ${context.read<ProductsCubit>().storageProducts[index].rate}",
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 16.sp,
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: 10.w,
+                                  ),
+                                  Text(
+                                    "\$${context.read<ProductsCubit>().storageProducts[index].price}",
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 16.sp,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-                SizedBox(height: 15),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.pop(context);
-                      },
-                      child: Container(
-                        padding:
-                            EdgeInsets.symmetric(horizontal: 50, vertical: 17),
-                        decoration: BoxDecoration(
+                SizedBox(height: 3.h),
+                Expanded(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      Expanded(
+                        child: BottomSheetButtons(
+                          onTap: () {
+                            Navigator.pop(context);
+                          },
+                          text: tr("cancel"),
                           color: Colors.grey,
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        child: Text(
-                          tr("cancel"),
-                          style: TextStyle(color: Colors.black, fontSize: 16),
                         ),
                       ),
-                    ),
-                    GestureDetector(
-                      onTap: deleteId,
-                      child: Container(
-                        padding:
-                            EdgeInsets.symmetric(horizontal: 50, vertical: 17),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
-                          color: Colors.black,
+                      Expanded(
+                        child: BottomSheetButtons(
+                          onTap: deleteId,
+                          text: tr("yes_remove"),
+                          color: Colors.white,
                         ),
-                        child: Text(
-                          tr("yes_remove"),
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 16,
-                          ),
-                        ),
-                      ),
-                    )
-                  ],
+                      )
+                    ],
+                  ),
                 )
               ],
             ),

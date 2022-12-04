@@ -1,5 +1,6 @@
 import 'package:commercial_app/repository/myrepository.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CategoryItemWidget extends StatelessWidget {
   const CategoryItemWidget({
@@ -22,23 +23,23 @@ class CategoryItemWidget extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        margin: EdgeInsets.symmetric(horizontal: 3, vertical: 5),
+        margin: EdgeInsets.symmetric(horizontal: 3.w, vertical: 5.h),
         child: Column(
           children: [
             Container(
-              margin: EdgeInsets.symmetric(horizontal: 10),
-              padding: EdgeInsets.all(15),
+              margin: EdgeInsets.symmetric(horizontal: 10.w),
+              padding: EdgeInsets.all(15.r),
               decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   color: selected == index ? Colors.black : Colors.white,
-                  boxShadow: [
+                  boxShadow: const [
                     BoxShadow(
                         offset: Offset(1, 1), blurRadius: 5, color: Colors.grey)
                   ]),
               child: Image.asset(
                 myRepository.images[index],
-                width: 30,
-                height: 30,
+                width: 30.w,
+                height: 30.h,
                 color: selected != index ? Colors.black : Colors.white,
               ),
             ),
@@ -50,7 +51,7 @@ class CategoryItemWidget extends StatelessWidget {
                 maxLines: 1,
                 style: TextStyle(
                   color: Colors.blueGrey.shade900,
-                  fontSize: 16,
+                  fontSize: 16.sp,
                 ),
               ),
             ),

@@ -1,6 +1,3 @@
-// ignore_for_file: prefer_const_constructors
-import 'dart:developer';
-
 import 'package:commercial_app/screens/auth/forgot_pass_screen.dart';
 import 'package:commercial_app/screens/auth/register.dart';
 import 'package:commercial_app/screens/auth/widgets/auth_button.dart';
@@ -10,7 +7,7 @@ import 'package:commercial_app/screens/auth/widgets/line_widget.dart';
 import 'package:commercial_app/screens/auth/widgets/login_with_button.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'extansions/sign_in_user.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -33,33 +30,33 @@ class _LoginScreenState extends State<LoginScreen> {
         elevation: 0,
       ),
       body: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: EdgeInsets.all(8.0.r),
         child: SingleChildScrollView(
           child: Column(
             children: [
               Container(
-                padding: EdgeInsets.all(10),
+                padding: EdgeInsets.all(10.r),
                 decoration: BoxDecoration(
                     color: Colors.blue.withOpacity(.1),
-                    borderRadius: BorderRadius.circular(10)),
+                    borderRadius: BorderRadius.circular(10.r)),
                 child: Text(
                   "👋",
-                  style: TextStyle(fontSize: 60),
+                  style: TextStyle(fontSize: 60.sp),
                 ),
               ),
               SizedBox(
-                height: 40,
+                height: 40.h,
               ),
               Text(
                 tr("sign_in"),
                 style: TextStyle(
                   color: Colors.blue,
-                  fontSize: 34,
+                  fontSize: 34.sp,
                   fontWeight: FontWeight.bold,
                 ),
               ),
               SizedBox(
-                height: 24,
+                height: 24.h,
               ),
               LoginWithButton(
                 imagePath: "assets/svg/google.svg",
@@ -71,24 +68,24 @@ class _LoginScreenState extends State<LoginScreen> {
                 },
               ),
               SizedBox(
-                height: 30,
+                height: 30.h,
               ),
               Row(
                 children: [
-                  LineWidget(),
+                  const LineWidget(),
                   Text(tr("or")),
-                  LineWidget(),
+                  const LineWidget(),
                 ],
               ),
               SizedBox(
-                height: 30,
+                height: 30.h,
               ),
               FieldForText(
                 hintText: "Email",
                 controller: emailController,
               ),
               SizedBox(
-                height: 16,
+                height: 16.h,
               ),
               FieldForText(
                 hintText: tr("password"),
@@ -102,7 +99,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 controller: passwordController,
               ),
               SizedBox(
-                height: 8,
+                height: 8.h,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
@@ -118,13 +115,13 @@ class _LoginScreenState extends State<LoginScreen> {
                     },
                     child: Text(
                       tr("forgot_password"),
-                      style: TextStyle(color: Colors.grey),
+                      style: const TextStyle(color: Colors.grey),
                     ),
                   )
                 ],
               ),
               SizedBox(
-                height: 32,
+                height: 32.h,
               ),
               AuthButton(
                 onTap: () async {
@@ -137,14 +134,14 @@ class _LoginScreenState extends State<LoginScreen> {
                 text: tr("log_in"),
               ),
               SizedBox(
-                height: 16,
+                height: 16.h,
               ),
               ChangerLoginAndRegister(
                 onTap: () {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => RegisterScreen(),
+                      builder: (context) => const RegisterScreen(),
                     ),
                   );
                 },

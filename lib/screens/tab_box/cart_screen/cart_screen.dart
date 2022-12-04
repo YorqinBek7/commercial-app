@@ -1,5 +1,3 @@
-// ignore_for_file: prefer_const_literals_to_create_immutables, avoid_unnecessary_containers, prefer_const_constructors
-
 import 'package:commercial_app/cubits/products/products_cubit.dart';
 import 'package:commercial_app/data/db/local_database.dart';
 import 'package:commercial_app/screens/tab_box/cart_screen/widget/carts_item.dart';
@@ -7,6 +5,7 @@ import 'package:commercial_app/screens/tab_box/cart_screen/widget/when_no_elemen
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CartPage extends StatefulWidget {
   const CartPage({super.key});
@@ -41,11 +40,11 @@ class _CartPageState extends State<CartPage> {
           backgroundColor: Colors.grey.shade100,
           title: Text(
             tr("my_cart"),
-            style: TextStyle(color: Colors.black, fontSize: 24),
+            style: TextStyle(color: Colors.black, fontSize: 24.sp),
           ),
         ),
         body: context.watch<ProductsCubit>().storageProducts.isEmpty
-            ? WhenNoElement()
+            ? const WhenNoElement()
             : Column(
                 children: [
                   Expanded(

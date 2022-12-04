@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class AuthButton extends StatelessWidget {
   final VoidCallback onTap;
@@ -13,22 +14,22 @@ class AuthButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       width: double.infinity,
-      height: 60,
+      height: 60.h,
       child: ElevatedButton(
         style: ButtonStyle(
           padding: MaterialStateProperty.all(
-            EdgeInsets.symmetric(horizontal: 9, vertical: 12),
+            EdgeInsets.symmetric(horizontal: 9.w, vertical: 12.h),
           ),
           shape: MaterialStateProperty.all(
             RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(14),
+              borderRadius: BorderRadius.circular(14.r),
             ),
           ),
         ),
         onPressed: onTap,
         child: Text(
           text,
-          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+          style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.bold),
         ),
       ),
     );

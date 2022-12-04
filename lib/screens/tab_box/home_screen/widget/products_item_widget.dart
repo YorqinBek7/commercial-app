@@ -1,6 +1,7 @@
 import 'package:commercial_app/models/product.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ProductsItemWidget extends StatelessWidget {
   final VoidCallback onTap;
@@ -20,11 +21,11 @@ class ProductsItemWidget extends StatelessWidget {
       children: [
         Container(
           width: double.infinity,
-          padding: EdgeInsets.all(5),
+          padding: EdgeInsets.all(5.r),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
             color: Colors.white,
-            boxShadow: [
+            boxShadow: const [
               BoxShadow(
                 offset: Offset(1, 1),
                 color: Colors.grey,
@@ -35,16 +36,16 @@ class ProductsItemWidget extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Spacer(),
+              const Spacer(),
               data[index].image == ""
-                  ? SizedBox()
+                  ? const SizedBox()
                   : Image.network(
                       data[index].image,
-                      width: 90,
-                      height: 90,
+                      width: 90.w,
+                      height: 90.h,
                     ),
               SizedBox(
-                height: 10,
+                height: 10.h,
               ),
               Expanded(
                 child: Text(
@@ -62,8 +63,8 @@ class ProductsItemWidget extends StatelessWidget {
           child: InkWell(
             onTap: onTap,
             child: Container(
-              padding: EdgeInsets.all(5),
-              decoration: BoxDecoration(
+              padding: EdgeInsets.all(5.r),
+              decoration: const BoxDecoration(
                 color: Colors.grey,
                 borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(5),
@@ -72,7 +73,7 @@ class ProductsItemWidget extends StatelessWidget {
               ),
               child: Text(
                 tr("add_to_cart"),
-                style: TextStyle(
+                style: const TextStyle(
                   fontWeight: FontWeight.w500,
                   color: Colors.white,
                 ),

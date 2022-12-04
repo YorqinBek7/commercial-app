@@ -2,10 +2,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
-Future<void> signUser(
-    {required String email,
-    required String password,
-    required BuildContext context}) async {
+Future<void> signUser({
+  required String email,
+  required String password,
+  required BuildContext context,
+}) async {
   try {
     await FirebaseAuth.instance.signInWithEmailAndPassword(
       email: email,
@@ -14,7 +15,9 @@ Future<void> signUser(
   } on FirebaseAuthException catch (e) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: Text(e.message.toString()),
+        content: Text(
+          e.message.toString(),
+        ),
       ),
     );
   }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class SelectOptionsWidget extends StatelessWidget {
   final String text;
@@ -16,18 +17,18 @@ class SelectOptionsWidget extends StatelessWidget {
     return InkWell(
       onTap: onTap,
       child: Container(
-        margin: EdgeInsets.symmetric(vertical: 5),
-        decoration: BoxDecoration(
+        margin: EdgeInsets.symmetric(vertical: 5.h),
+        decoration: const BoxDecoration(
           border: Border(
             top: BorderSide(
               color: Colors.grey,
             ),
           ),
         ),
-        height: 50,
+        height: 50.h,
         child: Row(children: [
           Text(text),
-          Spacer(),
+          const Spacer(),
           IconButton(onPressed: () {}, icon: Icon(icon))
         ]),
       ),

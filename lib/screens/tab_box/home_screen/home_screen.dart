@@ -1,4 +1,3 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 import 'package:commercial_app/cubits/get_all_categories/get_all_categories_cubit.dart';
 import 'package:commercial_app/cubits/products/products_cubit.dart';
 import 'package:commercial_app/cubits/select_language/select_language_cubit.dart';
@@ -17,6 +16,7 @@ import 'package:commercial_app/utils/notificaton.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class HomeTab extends StatefulWidget {
   const HomeTab({super.key});
@@ -61,7 +61,7 @@ class _HomeTabState extends State<HomeTab> {
           }
         },
         child: Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: EdgeInsets.all(8.0.r),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -84,14 +84,14 @@ class _HomeTabState extends State<HomeTab> {
                 ),
               ),
               SizedBox(
-                height: 20,
+                height: 20.h,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(tr('special_offers'),
                       style: TextStyle(
-                          color: Colors.blueGrey.shade900, fontSize: 18)),
+                          color: Colors.blueGrey.shade900, fontSize: 18.sp)),
                   GestureDetector(
                     onTap: () => {
                       setState(
@@ -104,18 +104,22 @@ class _HomeTabState extends State<HomeTab> {
                         ? Text(
                             tr("hide_categ_and_search"),
                             style: TextStyle(
-                                color: Colors.blueGrey.shade900, fontSize: 16),
+                              color: Colors.blueGrey.shade900,
+                              fontSize: 16.sp,
+                            ),
                           )
                         : Text(
                             tr("back"),
                             style: TextStyle(
-                                color: Colors.blueGrey.shade900, fontSize: 16),
+                              color: Colors.blueGrey.shade900,
+                              fontSize: 16.sp,
+                            ),
                           ),
                   ),
                 ],
               ),
               SizedBox(
-                height: 20,
+                height: 20.h,
               ),
               // <<------------------------------------------------- Get Categories Rows --------------------------------------------->>
               Visibility(
@@ -126,9 +130,9 @@ class _HomeTabState extends State<HomeTab> {
                     if (state is GetAllCategoriesSucces) {
                       List<String> data = state.allCategories;
                       return SizedBox(
-                        height: 100,
+                        height: 100.h,
                         child: ListView(
-                          physics: BouncingScrollPhysics(),
+                          physics: const BouncingScrollPhysics(),
                           scrollDirection: Axis.horizontal,
                           children: List.generate(
                             data.length,
@@ -161,7 +165,7 @@ class _HomeTabState extends State<HomeTab> {
                         ),
                       );
                     } else if (state is GetAllCategoriesLoading) {
-                      return CategoryShimmer();
+                      return const CategoryShimmer();
                     } else if (state is GetAllCategoriesError) {
                       return Center(
                         child: Text(tr("error")),
@@ -182,10 +186,11 @@ class _HomeTabState extends State<HomeTab> {
                     return Expanded(
                       flex: 4,
                       child: GridView.builder(
-                        physics: BouncingScrollPhysics(),
-                        padding: EdgeInsets.all(5),
+                        physics: const BouncingScrollPhysics(),
+                        padding: EdgeInsets.all(5.r),
                         itemCount: data.length,
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: 2,
                           mainAxisSpacing: 10,
                           crossAxisSpacing: 10,
@@ -211,7 +216,7 @@ class _HomeTabState extends State<HomeTab> {
                             );
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
-                                duration: Duration(milliseconds: 500),
+                                duration: const Duration(milliseconds: 500),
                                 content: Text(tr("product_added_to_cart")),
                               ),
                             );
@@ -227,9 +232,9 @@ class _HomeTabState extends State<HomeTab> {
                   } else if (state is ProductsError) {
                     return Center(child: Text(state.error.toString()));
                   } else if (state is ProductsLoading) {
-                    return ProductsShimmer();
+                    return const ProductsShimmer();
                   } else {
-                    return SizedBox();
+                    return const SizedBox();
                   }
                 },
               )

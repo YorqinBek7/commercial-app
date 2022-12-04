@@ -1,5 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class NotificationScreen extends StatelessWidget {
   const NotificationScreen({super.key});
@@ -10,7 +11,7 @@ class NotificationScreen extends StatelessWidget {
       backgroundColor: Colors.white,
       appBar: AppBar(
         leading: IconButton(
-          icon: Icon(
+          icon: const Icon(
             Icons.arrow_back_ios,
             color: Colors.black,
           ),
@@ -23,7 +24,7 @@ class NotificationScreen extends StatelessWidget {
           tr("notifications"),
           style: TextStyle(
             color: Colors.black,
-            fontSize: 24,
+            fontSize: 24.sp,
             fontWeight: FontWeight.bold,
           ),
         ),
@@ -31,36 +32,37 @@ class NotificationScreen extends StatelessWidget {
         backgroundColor: Colors.white,
       ),
       body: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: ListView.builder(
-            physics: BouncingScrollPhysics(),
-            itemCount: 10,
-            itemBuilder: (context, index) {
-              return Container(
-                padding: EdgeInsets.all(10),
-                margin: EdgeInsets.symmetric(vertical: 5),
-                height: 100,
-                decoration: BoxDecoration(
-                  color: Colors.grey.withOpacity(.5),
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(DateTime.now().toString()),
-                    SizedBox(height: 10),
-                    Text(
-                      "HelloHelloHelloHelloHelloHelloHelloHelloHelloHelloHelloHelloHelloHelloHelloHelloHelloHelloHelloHello",
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontWeight: FontWeight.w500,
-                      ),
+        padding: EdgeInsets.all(8.0.r),
+        child: ListView.builder(
+          physics: const BouncingScrollPhysics(),
+          itemCount: 10,
+          itemBuilder: (context, index) {
+            return Container(
+              padding: EdgeInsets.all(10.r),
+              margin: EdgeInsets.symmetric(vertical: 5.h),
+              height: 100.h,
+              decoration: BoxDecoration(
+                color: Colors.grey.withOpacity(.5),
+                borderRadius: BorderRadius.circular(10.r),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(DateTime.now().toString()),
+                  SizedBox(height: 10.h),
+                  const Text(
+                    "HelloHelloHelloHelloHelloHelloHelloHelloHelloHelloHelloHelloHelloHelloHelloHelloHelloHelloHelloHello",
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontWeight: FontWeight.w500,
                     ),
-                  ],
-                ),
-              );
-            },
-          )),
+                  ),
+                ],
+              ),
+            );
+          },
+        ),
+      ),
     );
   }
 }

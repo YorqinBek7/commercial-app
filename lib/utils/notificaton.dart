@@ -29,8 +29,6 @@ class LocalNotification {
                 AndroidFlutterLocalNotificationsPlugin>()
             ?.requestPermission() ??
         false;
-
-    void notificatonBackground(NotificationResponse notificationResponse) {}
   }
 
   void onDidRecieveNotificationResponse(
@@ -38,10 +36,9 @@ class LocalNotification {
   ) async {
     navigatorKey.currentState?.push(
       MaterialPageRoute(
-        builder: (context) => NotificationScreen(),
+        builder: (context) => const NotificationScreen(),
       ),
     );
-    final String? payload = notificationResponse.payload;
   }
 
   void onDidRecieveBackgorundNotificationResponse(
@@ -49,13 +46,13 @@ class LocalNotification {
   ) async {
     navigatorKey.currentState?.push(
       MaterialPageRoute(
-        builder: (context) => NotificationScreen(),
+        builder: (context) => const NotificationScreen(),
       ),
     );
-    final String? payload = notificationResponse.payload;
   }
 
-  final AndroidNotificationChannel androidChannel = AndroidNotificationChannel(
+  final AndroidNotificationChannel androidChannel =
+      const AndroidNotificationChannel(
     "super_shop",
     "Super Shop",
     importance: Importance.defaultImportance,

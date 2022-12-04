@@ -4,6 +4,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSize {
   final VoidCallback onTap;
@@ -26,14 +27,14 @@ class CustomAppBar extends StatelessWidget implements PreferredSize {
       title: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         Text(
           getTime(),
-          style: TextStyle(color: Colors.blueGrey.shade900, fontSize: 14),
+          style: TextStyle(color: Colors.blueGrey.shade900, fontSize: 14.sp),
         ),
         SizedBox(
-          height: 5,
+          height: 5.h,
         ),
         Text(
           FirebaseAuth.instance.currentUser!.displayName ?? "",
-          style: TextStyle(color: Colors.blueGrey.shade900, fontSize: 17),
+          style: TextStyle(color: Colors.blueGrey.shade900, fontSize: 17.sp),
         ),
       ]),
       actions: [
@@ -46,7 +47,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSize {
               ),
             )
           },
-          child: Icon(
+          child: const Icon(
             Icons.notifications,
             size: 30,
             color: Colors.yellow,
@@ -60,7 +61,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSize {
           ),
         ),
         SizedBox(
-          width: 5,
+          width: 5.w,
         )
       ],
     );

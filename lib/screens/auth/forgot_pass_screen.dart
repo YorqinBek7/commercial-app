@@ -4,6 +4,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ForgotPasswordScreen extends StatelessWidget {
   final TextEditingController emailController = TextEditingController();
@@ -27,37 +28,38 @@ class ForgotPasswordScreen extends StatelessWidget {
         elevation: 0,
       ),
       body: Padding(
-        padding: const EdgeInsets.all(24.0),
+        padding: EdgeInsets.all(24.0.r),
         child: SingleChildScrollView(
           child: Column(
             children: [
               Text(
                 "📨",
-                style: TextStyle(fontSize: 60),
+                style: TextStyle(fontSize: 60.sp),
               ),
               SizedBox(
-                height: 42,
+                height: 42.h,
               ),
               Text(
                 tr("restore_password"),
                 style: TextStyle(
-                    color: Colors.blue,
-                    fontSize: 32,
-                    fontWeight: FontWeight.w600),
+                  color: Colors.blue,
+                  fontSize: 32.sp,
+                  fontWeight: FontWeight.w600,
+                ),
               ),
               SizedBox(
-                height: 24,
+                height: 24.h,
               ),
               Text(
                 "message_about_forgot_password",
                 style: TextStyle(
-                  fontSize: 16,
+                  fontSize: 16.sp,
                   fontWeight: FontWeight.w500,
                   color: Colors.pink,
                 ),
               ),
               SizedBox(
-                height: 24,
+                height: 24.h,
               ),
               FieldForText(
                 hintText: tr("enter_your_email"),
@@ -72,7 +74,7 @@ class ForgotPasswordScreen extends StatelessWidget {
                 },
               ),
               SizedBox(
-                height: 32,
+                height: 32.h,
               ),
               AuthButton(
                 onTap: () async {

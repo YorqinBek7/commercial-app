@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lottie/lottie.dart';
 
 class WhenNoElement extends StatelessWidget {
@@ -14,8 +15,8 @@ class WhenNoElement extends StatelessWidget {
         children: [
           LottieBuilder.asset(
             "assets/lotties/no_data.json",
-            width: 350,
-            height: 350,
+            width: 350.w,
+            height: 350.h,
           ),
         ],
       ),

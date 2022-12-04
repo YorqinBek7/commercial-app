@@ -6,8 +6,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
 
 class NoInternetScreen extends StatelessWidget {
-  final VoidCallback voidCallback;
-  const NoInternetScreen({super.key, required this.voidCallback});
+  const NoInternetScreen({
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {

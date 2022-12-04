@@ -7,8 +7,8 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:http/http.dart';
 import 'package:image_picker/image_picker.dart';
 
 class UserScreen extends StatefulWidget {
@@ -33,7 +33,7 @@ class _UserScreenState extends State<UserScreen> {
         backgroundColor: Colors.white,
         leading: IconButton(
           onPressed: () => Navigator.pop(context),
-          icon: Icon(
+          icon: const Icon(
             Icons.arrow_back_ios,
             color: Colors.black,
           ),
@@ -41,7 +41,7 @@ class _UserScreenState extends State<UserScreen> {
         elevation: 0,
       ),
       body: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: EdgeInsets.all(8.0.r),
         child: Column(
           children: [
             Avatar(
@@ -53,22 +53,22 @@ class _UserScreenState extends State<UserScreen> {
                 );
               },
             ),
-            SizedBox(height: 20),
+            SizedBox(height: 20.h),
             Text(
               FirebaseAuth.instance.currentUser!.displayName!,
               style: TextStyle(
-                fontSize: 16,
+                fontSize: 16.sp,
                 fontWeight: FontWeight.bold,
               ),
             ),
-            SizedBox(height: 10),
+            SizedBox(height: 10.h),
             TextField(
               controller: textEditingController,
               focusNode: focusNode,
               decoration: InputDecoration(
                 hintText: tr("change_name"),
                 suffixIcon: IconButton(
-                  icon: Icon(
+                  icon: const Icon(
                     Icons.done,
                   ),
                   onPressed: () async {
@@ -86,10 +86,10 @@ class _UserScreenState extends State<UserScreen> {
                     }
                   },
                 ),
-                border: OutlineInputBorder(),
+                border: const OutlineInputBorder(),
               ),
             ),
-            SizedBox(height: 10),
+            SizedBox(height: 10.h),
             AuthButton(
                 onTap: () async {
                   focusNode.unfocus();
@@ -106,7 +106,7 @@ class _UserScreenState extends State<UserScreen> {
                   }
                 },
                 text: tr("change_name")),
-            SizedBox(height: 10),
+            SizedBox(height: 10.h),
             SelectOptionsWidget(
               icon: Icons.language_outlined,
               text: tr('language'),
@@ -121,8 +121,8 @@ class _UserScreenState extends State<UserScreen> {
                         children: [
                           Builder(builder: (context) {
                             return ListTile(
-                              title: Text("Uzbek"),
-                              trailing: Text("🇺🇿"),
+                              title: const Text("Uzbek"),
+                              trailing: const Text("🇺🇿"),
                               selected: selectLanguage == 0,
                               selectedTileColor: Colors.blue.withOpacity(0.1),
                               selectedColor: Colors.green,
@@ -141,8 +141,8 @@ class _UserScreenState extends State<UserScreen> {
                             );
                           }),
                           ListTile(
-                            title: Text("English"),
-                            trailing: Text("🏴󠁧󠁢󠁥󠁮󠁧󠁿"),
+                            title: const Text("English"),
+                            trailing: const Text("🏴󠁧󠁢󠁥󠁮󠁧󠁿"),
                             selected: selectLanguage == 1,
                             selectedTileColor: Colors.blue.withOpacity(0.1),
                             selectedColor: Colors.green,

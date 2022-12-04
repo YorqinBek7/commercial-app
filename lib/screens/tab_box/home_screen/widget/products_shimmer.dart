@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shimmer/shimmer.dart';
 
 class ProductsShimmer extends StatelessWidget {
@@ -11,8 +12,8 @@ class ProductsShimmer extends StatelessWidget {
     return Expanded(
       flex: 4,
       child: GridView.builder(
-        padding: EdgeInsets.all(10),
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        padding: EdgeInsets.all(10.r),
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2,
           mainAxisSpacing: 10,
           crossAxisSpacing: 10,
@@ -24,7 +25,7 @@ class ProductsShimmer extends StatelessWidget {
           child: Container(
             decoration: BoxDecoration(
                 color: Colors.white, borderRadius: BorderRadius.circular(15)),
-            padding: EdgeInsets.all(15),
+            padding: EdgeInsets.all(15.r),
           ),
         ),
       ),

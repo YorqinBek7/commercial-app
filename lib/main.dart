@@ -1,5 +1,3 @@
-//ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
-
 import 'package:commercial_app/cubits/auth_checker/auth_checker_cubit.dart';
 import 'package:commercial_app/cubits/change_user_info/change_user_info_cubit.dart';
 import 'package:commercial_app/cubits/check_connection/check_connection_cubit.dart';
@@ -12,9 +10,9 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
-final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
@@ -22,11 +20,11 @@ void main() async {
   LocalNotification.notification.init();
   runApp(EasyLocalization(
       path: 'assets/translations',
-      supportedLocales: [
+      supportedLocales: const [
         Locale('en', 'EN'),
         Locale('uz', 'UZ'),
       ],
-      fallbackLocale: Locale('uz', 'UZ'),
+      fallbackLocale: const Locale('uz', 'UZ'),
       child: const MyApp()));
 }
 
@@ -56,13 +54,20 @@ class MyApp extends StatelessWidget {
           create: (context) => SelectLanguageCubit(),
         )
       ],
-      child: MaterialApp(
-        localizationsDelegates: context.localizationDelegates,
-        supportedLocales: context.supportedLocales,
-        locale: context.locale,
-        navigatorKey: navigatorKey,
-        debugShowCheckedModeBanner: false,
-        home: SplashScreen(),
+      child: ScreenUtilInit(
+        splitScreenMode: true,
+        minTextAdapt: true,
+        designSize: const Size(390, 844),
+        builder: (BuildContext context, Widget? child) {
+          return MaterialApp(
+            localizationsDelegates: context.localizationDelegates,
+            supportedLocales: context.supportedLocales,
+            locale: context.locale,
+            navigatorKey: navigatorKey,
+            debugShowCheckedModeBanner: false,
+            home: const SplashScreen(),
+          );
+        },
       ),
     );
   }
