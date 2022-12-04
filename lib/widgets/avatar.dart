@@ -2,6 +2,7 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:commercial_app/cubits/change_user_info/change_user_info_cubit.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -26,23 +27,39 @@ class Avatar extends StatelessWidget {
         ),
         child: ClipRRect(
           borderRadius: BorderRadius.circular(100),
-          child: context.read<ChangeUserInfoCubit>().imageUrl == ""
-              ? SizedBox(
-                  height: 90,
-                  width: 90,
-                  child: Image.asset(
-                    "assets/images/avatar.png",
-                    fit: BoxFit.cover,
-                  ),
-                )
-              : SizedBox(
-                  height: 90,
-                  width: 90,
-                  child: Image.file(
-                    File(context.read<ChangeUserInfoCubit>().imageUrl),
-                    fit: BoxFit.cover,
-                  ),
+          child: BlocBuilder<ChangeUserInfoCubit, ChangeUserInfoState>(
+            builder: (context, state) {
+              if (state is UserChanged) {
+                return CircularProgressIndicator();
+              } else if (state is UserChangingState) {
+                return state.image == null
+                    ? SizedBox(
+                        height: 90,
+                        width: 90,
+                        child: Image.asset(
+                          "assets/images/avatar.png",
+                          fit: BoxFit.cover,
+                        ),
+                      )
+                    : SizedBox(
+                        height: 90,
+                        width: 90,
+                        child: Image.file(
+                          File(state.image!),
+                          fit: BoxFit.cover,
+                        ),
+                      );
+              }
+              return SizedBox(
+                height: 90,
+                width: 90,
+                child: Image.asset(
+                  "assets/images/avatar.png",
+                  fit: BoxFit.cover,
                 ),
+              );
+            },
+          ),
         ),
       ),
     );

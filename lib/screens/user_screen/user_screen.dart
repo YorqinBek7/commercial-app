@@ -1,12 +1,9 @@
-import 'dart:developer';
-
-import 'package:commercial_app/cubits/change_user_info/change_user_info_cubit.dart';
 import 'package:commercial_app/screens/auth/widgets/auth_button.dart';
 import 'package:commercial_app/screens/user_screen/widget/select_option.dart';
+import 'package:commercial_app/screens/user_screen/widget/show_bottom_sheet.dart';
 import 'package:commercial_app/widgets/avatar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -20,17 +17,17 @@ class UserScreen extends StatefulWidget {
 class _UserScreenState extends State<UserScreen> {
   XFile? file;
   final ImagePicker imagePicker = ImagePicker();
-
+  final TextEditingController textEditingController = TextEditingController();
+  final FocusNode focusNode = FocusNode();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.white,
         leading: IconButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
+          onPressed: () => Navigator.pop(context),
           icon: Icon(
             Icons.arrow_back_ios,
             color: Colors.black,
@@ -44,71 +41,10 @@ class _UserScreenState extends State<UserScreen> {
           children: [
             Avatar(
               onTap: () async {
-                showModalBottomSheet(
+                await showBottomDialog(
                   context: context,
-                  builder: (context) => SizedBox(
-                    height: 200,
-                    child: Column(
-                      children: [
-                        SizedBox(height: 15),
-                        Text(
-                          "Pick profile photo",
-                          style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        SizedBox(height: 5),
-                        Builder(builder: (context) {
-                          return ListTile(
-                            title: Text(
-                              "Select from Camera",
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ),
-                            trailing: Icon(Icons.camera_alt_outlined),
-                            onTap: () async {
-                              file = await imagePicker.pickImage(
-                                source: ImageSource.camera,
-                              );
-
-                              await FirebaseAuth.instance.currentUser!
-                                  .updatePhotoURL(file!.path);
-                              //   Navigator.pop(context);
-                            },
-                          );
-                        }),
-                        ListTile(
-                          title: const Text(
-                            "Select from Gallery",
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                          trailing: Icon(Icons.image),
-                          onTap: () async {
-                            log(BlocProvider.of<ChangeUserInfoCubit>(context)
-                                .imageUrl);
-                            Navigator.pop(context);
-                            file = await imagePicker.pickImage(
-                              source: ImageSource.gallery,
-                            );
-                            await FirebaseAuth.instance.currentUser!
-                                .updatePhotoURL(file!.path);
-                            log("123123");
-                            context.read<ChangeUserInfoCubit>().imageUrl =
-                                "LOOO";
-                            log(context.read<ChangeUserInfoCubit>().imageUrl);
-                            log("message2");
-                            setState(() {});
-                          },
-                        ),
-                      ],
-                    ),
-                  ),
+                  imagePicker: imagePicker,
+                  file: file,
                 );
               },
             ),
@@ -120,6 +56,51 @@ class _UserScreenState extends State<UserScreen> {
                 fontWeight: FontWeight.bold,
               ),
             ),
+            SizedBox(height: 10),
+            TextField(
+              controller: textEditingController,
+              focusNode: focusNode,
+              decoration: InputDecoration(
+                hintText: "Change user name",
+                suffixIcon: IconButton(
+                  icon: Icon(
+                    Icons.done,
+                  ),
+                  onPressed: () async {
+                    focusNode.unfocus();
+                    if (textEditingController.text.isEmpty) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text("Please enter something!"),
+                          duration: Duration(seconds: 1),
+                        ),
+                      );
+                    } else {
+                      await updateUserName(context);
+                      setState(() {});
+                    }
+                  },
+                ),
+                border: OutlineInputBorder(),
+              ),
+            ),
+            SizedBox(height: 10),
+            AuthButton(
+                onTap: () async {
+                  focusNode.unfocus();
+                  if (textEditingController.text.isEmpty) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text("Please enter something!"),
+                        duration: Duration(seconds: 1),
+                      ),
+                    );
+                  } else {
+                    await updateUserName(context);
+                    setState(() {});
+                  }
+                },
+                text: "Change name"),
             SizedBox(height: 10),
             SelectOptionsWidget(
               icon: Icons.language_outlined,
@@ -147,6 +128,16 @@ class _UserScreenState extends State<UserScreen> {
             )
           ],
         ),
+      ),
+    );
+  }
+
+  Future<void> updateUserName(BuildContext context) async {
+    await FirebaseAuth.instance.currentUser!
+        .updateDisplayName(textEditingController.text);
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text("User name successfuly changed"),
       ),
     );
   }

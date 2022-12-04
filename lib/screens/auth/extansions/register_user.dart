@@ -14,9 +14,9 @@ Future<void> registerUser(
       password: password,
     );
     await FirebaseAuth.instance.currentUser?.updateDisplayName(name);
-    context.read<ChangeUserInfoCubit>().name =
-        FirebaseAuth.instance.currentUser!.displayName!;
-    context.read<ChangeUserInfoCubit>().updateUserName(nameUser: name);
+
+    context.read<ChangeUserInfoCubit>().changeUserInfo(
+        name: FirebaseAuth.instance.currentUser!.displayName!, image: null);
   } on FirebaseAuthException catch (e) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
