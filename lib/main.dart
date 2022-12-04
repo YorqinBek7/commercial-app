@@ -11,21 +11,28 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+SharedPreferences? sharedPreferences;
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
   await Firebase.initializeApp();
   LocalNotification.notification.init();
-  runApp(EasyLocalization(
+  sharedPreferences = await SharedPreferences.getInstance();
+
+  runApp(
+    EasyLocalization(
       path: 'assets/translations',
       supportedLocales: const [
         Locale('en', 'EN'),
         Locale('uz', 'UZ'),
       ],
       fallbackLocale: const Locale('uz', 'UZ'),
-      child: const MyApp()));
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {

@@ -1,4 +1,5 @@
 import 'package:commercial_app/cubits/select_language/select_language_cubit.dart';
+import 'package:commercial_app/main.dart';
 import 'package:commercial_app/screens/auth/widgets/auth_button.dart';
 import 'package:commercial_app/screens/user_screen/widget/select_option.dart';
 import 'package:commercial_app/screens/user_screen/widget/show_bottom_sheet.dart';
@@ -23,7 +24,6 @@ class _UserScreenState extends State<UserScreen> {
   final ImagePicker imagePicker = ImagePicker();
   final TextEditingController textEditingController = TextEditingController();
   final FocusNode focusNode = FocusNode();
-  int selectLanguage = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -123,13 +123,16 @@ class _UserScreenState extends State<UserScreen> {
                             return ListTile(
                               title: const Text("Uzbek"),
                               trailing: const Text("🇺🇿"),
-                              selected: selectLanguage == 0,
+                              selected: sharedPreferences!
+                                      .getInt("select_language") ==
+                                  0,
                               selectedTileColor: Colors.blue.withOpacity(0.1),
                               selectedColor: Colors.green,
                               onTap: () {
                                 setState(
                                   () {
-                                    selectLanguage = 0;
+                                    sharedPreferences!
+                                        .setInt("select_language", 0);
                                     context
                                         .read<SelectLanguageCubit>()
                                         .selectUzbekLanguage();
@@ -143,13 +146,16 @@ class _UserScreenState extends State<UserScreen> {
                           ListTile(
                             title: const Text("English"),
                             trailing: const Text("🏴󠁧󠁢󠁥󠁮󠁧󠁿"),
-                            selected: selectLanguage == 1,
+                            selected:
+                                sharedPreferences!.getInt("select_language") ==
+                                    1,
                             selectedTileColor: Colors.blue.withOpacity(0.1),
                             selectedColor: Colors.green,
                             onTap: () {
                               setState(
                                 () {
-                                  selectLanguage = 1;
+                                  sharedPreferences!
+                                      .setInt("select_language", 1);
                                   context
                                       .read<SelectLanguageCubit>()
                                       .selectEnglandLanguage();
@@ -176,7 +182,7 @@ class _UserScreenState extends State<UserScreen> {
               text: tr('about'),
               onTap: () {},
             ),
-            Spacer(),
+            const Spacer(),
             AuthButton(
               onTap: () async {
                 Navigator.pop(context);
