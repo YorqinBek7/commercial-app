@@ -77,7 +77,7 @@ class _UserScreenState extends State<UserScreen> {
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
                           content: Text(tr("please_enter_something")),
-                          duration: Duration(seconds: 1),
+                          duration: const Duration(seconds: 1),
                         ),
                       );
                     } else {

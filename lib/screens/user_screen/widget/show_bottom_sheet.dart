@@ -34,7 +34,7 @@ showBottomDialog({
                 fontWeight: FontWeight.w500,
               ),
             ),
-            trailing: Icon(Icons.camera_alt_outlined),
+            trailing: const Icon(Icons.camera_alt_outlined),
             onTap: () async {
               file = await imagePicker.pickImage(
                 source: ImageSource.camera,

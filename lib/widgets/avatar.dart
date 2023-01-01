@@ -1,6 +1,6 @@
 import 'dart:io';
-
 import 'package:commercial_app/cubits/change_user_info/change_user_info_cubit.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -31,7 +31,7 @@ class Avatar extends StatelessWidget {
               if (state is UserChanged) {
                 return const CircularProgressIndicator();
               } else if (state is UserChangingState) {
-                return state.image == null
+                return FirebaseAuth.instance.currentUser?.photoURL == null
                     ? SizedBox(
                         height: 90.h,
                         width: 90.w,
@@ -44,7 +44,7 @@ class Avatar extends StatelessWidget {
                         height: 90.h,
                         width: 90.w,
                         child: Image.file(
-                          File(state.image!),
+                          File(FirebaseAuth.instance.currentUser!.photoURL!),
                           fit: BoxFit.cover,
                         ),
                       );

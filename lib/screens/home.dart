@@ -17,10 +17,6 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   List<Widget> screens = [const HomeTab(), const CartPage()];
   int currentIndex = 0;
-  @override
-  void initState() {
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +26,7 @@ class _HomePageState extends State<HomePage> {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => NoInternetScreen(),
+              builder: (context) => const NoInternetScreen(),
             ),
           );
         }
@@ -44,7 +40,10 @@ class _HomePageState extends State<HomePage> {
           }
         },
         child: Scaffold(
-          body: screens[currentIndex],
+          body: IndexedStack(
+            index: currentIndex,
+            children: screens,
+          ),
           bottomNavigationBar: BottomNavigationBar(
             onTap: (value) => {
               setState(

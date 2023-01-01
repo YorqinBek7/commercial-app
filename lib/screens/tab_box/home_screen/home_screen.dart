@@ -52,7 +52,7 @@ class _HomeTabState extends State<HomeTab> {
           );
         },
       ),
-      body: BlocListener<SelectLanguageCubit, SelectLanguageState>(
+      body: BlocConsumer<SelectLanguageCubit, SelectLanguageState>(
         listener: (context, state) {
           if (state.runtimeType == SelectLanguageEngland) {
             setState(() {});
@@ -60,187 +60,192 @@ class _HomeTabState extends State<HomeTab> {
             setState(() {});
           }
         },
-        child: Padding(
-          padding: EdgeInsets.all(8.0.r),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Visibility(
-                visible: visibility,
-                child: SearchField(
-                  onChanged: (value) {
-                    (value as String).isEmpty
-                        ? isSearching = false
-                        : isSearching = true;
-                    searchedProducts.clear();
-                    for (var element
-                        in context.read<ProductsCubit>().allProducts) {
-                      if (element.title.toLowerCase().trim().contains(value)) {
-                        searchedProducts.add(element);
+        builder: (context, state) {
+          return Padding(
+            padding: EdgeInsets.all(8.0.r),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Visibility(
+                  visible: visibility,
+                  child: SearchField(
+                    onChanged: (value) {
+                      (value as String).isEmpty
+                          ? isSearching = false
+                          : isSearching = true;
+                      searchedProducts.clear();
+                      for (var element
+                          in context.read<ProductsCubit>().allProducts) {
+                        if (element.title
+                            .toLowerCase()
+                            .trim()
+                            .contains(value)) {
+                          searchedProducts.add(element);
+                        }
                       }
-                    }
-                    setState(() {});
-                  },
-                ),
-              ),
-              SizedBox(
-                height: 20.h,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(tr('special_offers'),
-                      style: TextStyle(
-                          color: Colors.blueGrey.shade900, fontSize: 18.sp)),
-                  GestureDetector(
-                    onTap: () => {
-                      setState(
-                        () => {
-                          visibility = !visibility,
-                        },
-                      )
+                      setState(() {});
                     },
-                    child: visibility
-                        ? Text(
-                            tr("hide_categ_and_search"),
-                            style: TextStyle(
-                              color: Colors.blueGrey.shade900,
-                              fontSize: 16.sp,
+                  ),
+                ),
+                SizedBox(
+                  height: 20.h,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(tr('special_offers'),
+                        style: TextStyle(
+                            color: Colors.blueGrey.shade900, fontSize: 18.sp)),
+                    GestureDetector(
+                      onTap: () => {
+                        setState(
+                          () => {
+                            visibility = !visibility,
+                          },
+                        )
+                      },
+                      child: visibility
+                          ? Text(
+                              tr("hide_categ_and_search"),
+                              style: TextStyle(
+                                color: Colors.blueGrey.shade900,
+                                fontSize: 16.sp,
+                              ),
+                            )
+                          : Text(
+                              tr("back"),
+                              style: TextStyle(
+                                color: Colors.blueGrey.shade900,
+                                fontSize: 16.sp,
+                              ),
                             ),
-                          )
-                        : Text(
-                            tr("back"),
-                            style: TextStyle(
-                              color: Colors.blueGrey.shade900,
-                              fontSize: 16.sp,
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: 20.h,
+                ),
+                // <<------------------------------------------------- Get Categories Rows --------------------------------------------->>
+                Visibility(
+                  visible: visibility,
+                  child:
+                      BlocBuilder<GetAllCategoriesCubit, GetAllCategoriesState>(
+                    builder: (context, state) {
+                      if (state is GetAllCategoriesSucces) {
+                        List<String> data = state.allCategories;
+                        return SizedBox(
+                          height: 100.h,
+                          child: ListView(
+                            physics: const BouncingScrollPhysics(),
+                            scrollDirection: Axis.horizontal,
+                            children: List.generate(
+                              data.length,
+                              (int index) => CategoryItemWidget(
+                                selected: context
+                                    .read<GetAllCategoriesCubit>()
+                                    .selected,
+                                myRepository: MyRepository(),
+                                data: data,
+                                index: index,
+                                onTap: () => {
+                                  context
+                                      .read<GetAllCategoriesCubit>()
+                                      .selectedCategory = data[index],
+                                  setState(
+                                    () => {
+                                      context
+                                          .read<GetAllCategoriesCubit>()
+                                          .selected = index,
+                                      updateUi(
+                                        categoryName: context
+                                            .read<GetAllCategoriesCubit>()
+                                            .selectedCategory,
+                                      )
+                                    },
+                                  )
+                                },
+                              ),
                             ),
                           ),
+                        );
+                      } else if (state is GetAllCategoriesLoading) {
+                        return const CategoryShimmer();
+                      } else if (state is GetAllCategoriesError) {
+                        return Center(
+                          child: Text(tr("error")),
+                        );
+                      } else {
+                        return const SizedBox();
+                      }
+                    },
                   ),
-                ],
-              ),
-              SizedBox(
-                height: 20.h,
-              ),
-              // <<------------------------------------------------- Get Categories Rows --------------------------------------------->>
-              Visibility(
-                visible: visibility,
-                child:
-                    BlocBuilder<GetAllCategoriesCubit, GetAllCategoriesState>(
+                ),
+                // <<--------------------------------------------------- Get Products ----------------------------------------->>
+                BlocBuilder<ProductsCubit, ProductsState>(
                   builder: (context, state) {
-                    if (state is GetAllCategoriesSucces) {
-                      List<String> data = state.allCategories;
-                      return SizedBox(
-                        height: 100.h,
-                        child: ListView(
+                    if (state is ProductsSuccess) {
+                      List<ProductItem> data = isSearching
+                          ? searchedProducts.toList()
+                          : state.products;
+                      return Expanded(
+                        flex: 4,
+                        child: GridView.builder(
                           physics: const BouncingScrollPhysics(),
-                          scrollDirection: Axis.horizontal,
-                          children: List.generate(
-                            data.length,
-                            (int index) => CategoryItemWidget(
-                              selected: context
-                                  .read<GetAllCategoriesCubit>()
-                                  .selected,
-                              myRepository: MyRepository(),
-                              data: data,
-                              index: index,
-                              onTap: () => {
-                                context
-                                    .read<GetAllCategoriesCubit>()
-                                    .selectedCategory = data[index],
-                                setState(
-                                  () => {
-                                    context
-                                        .read<GetAllCategoriesCubit>()
-                                        .selected = index,
-                                    updateUi(
-                                      categoryName: context
-                                          .read<GetAllCategoriesCubit>()
-                                          .selectedCategory,
-                                    )
-                                  },
-                                )
-                              },
-                            ),
+                          padding: EdgeInsets.all(5.r),
+                          itemCount: data.length,
+                          gridDelegate:
+                              const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            mainAxisSpacing: 10,
+                            crossAxisSpacing: 10,
+                            childAspectRatio: .82,
+                          ),
+                          itemBuilder: (context, index) => ProductsItemWidget(
+                            onTap: () async {
+                              var item = SelectedProducts(
+                                count: data[index].ratingItem.count,
+                                image: data[index].image,
+                                price: data[index].price.toInt(),
+                                rate: data[index].ratingItem.rate.toInt(),
+                                title: data[index].title,
+                                id: 0,
+                                countSelect: 0,
+                              );
+                              await LocalDataBase.insert(item);
+                              LocalNotification.notification.showNotification(
+                                "Nima Gap EEe",
+                                2,
+                                data[index].title,
+                                data[index].description,
+                              );
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  duration: const Duration(milliseconds: 500),
+                                  content: Text(tr("product_added_to_cart")),
+                                ),
+                              );
+                              setState(
+                                () => {},
+                              );
+                            },
+                            data: data,
+                            index: index,
                           ),
                         ),
                       );
-                    } else if (state is GetAllCategoriesLoading) {
-                      return const CategoryShimmer();
-                    } else if (state is GetAllCategoriesError) {
-                      return Center(
-                        child: Text(tr("error")),
-                      );
+                    } else if (state is ProductsError) {
+                      return Center(child: Text(state.error.toString()));
+                    } else if (state is ProductsLoading) {
+                      return const ProductsShimmer();
                     } else {
                       return const SizedBox();
                     }
                   },
-                ),
-              ),
-              // <<--------------------------------------------------- Get Products ----------------------------------------->>
-              BlocBuilder<ProductsCubit, ProductsState>(
-                builder: (context, state) {
-                  if (state is ProductsSuccess) {
-                    List<ProductItem> data = isSearching
-                        ? searchedProducts.toList()
-                        : state.products;
-                    return Expanded(
-                      flex: 4,
-                      child: GridView.builder(
-                        physics: const BouncingScrollPhysics(),
-                        padding: EdgeInsets.all(5.r),
-                        itemCount: data.length,
-                        gridDelegate:
-                            const SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2,
-                          mainAxisSpacing: 10,
-                          crossAxisSpacing: 10,
-                          childAspectRatio: .82,
-                        ),
-                        itemBuilder: (context, index) => ProductsItemWidget(
-                          onTap: () async {
-                            var item = SelectedProducts(
-                              count: data[index].ratingItem.count,
-                              image: data[index].image,
-                              price: data[index].price.toInt(),
-                              rate: data[index].ratingItem.rate.toInt(),
-                              title: data[index].title,
-                              id: 0,
-                              countSelect: 0,
-                            );
-                            await LocalDataBase.insert(item);
-                            LocalNotification.notification.showNotification(
-                              "Nima Gap EEe",
-                              2,
-                              data[index].title,
-                              data[index].description,
-                            );
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
-                                duration: const Duration(milliseconds: 500),
-                                content: Text(tr("product_added_to_cart")),
-                              ),
-                            );
-                            setState(
-                              () => {},
-                            );
-                          },
-                          data: data,
-                          index: index,
-                        ),
-                      ),
-                    );
-                  } else if (state is ProductsError) {
-                    return Center(child: Text(state.error.toString()));
-                  } else if (state is ProductsLoading) {
-                    return const ProductsShimmer();
-                  } else {
-                    return const SizedBox();
-                  }
-                },
-              )
-            ],
-          ),
-        ),
+                )
+              ],
+            ),
+          );
+        },
       ),
     );
   }
